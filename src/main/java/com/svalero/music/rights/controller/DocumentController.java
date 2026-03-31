@@ -27,6 +27,7 @@ public class DocumentController {
         this.documentService = documentService;
     }
 
+    @RequestMapping("api/v1")
     @GetMapping("/documents")
     public ResponseEntity<List<Document>> getAll(
             @RequestParam(value = "type", required = false) String type,

@@ -19,6 +19,7 @@ public class ConcertController {
         this.concertService = concertService;
     }
 
+    @RequestMapping("api/v1")
     @GetMapping("/concerts")
     public ResponseEntity<List<Concert>> getAll(
             @RequestParam(value = "city", required = false) String city,

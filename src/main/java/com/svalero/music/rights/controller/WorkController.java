@@ -26,6 +26,7 @@ public class WorkController {
 
     }
 
+    @RequestMapping("api/v1")
     @GetMapping("/works")
     public ResponseEntity<List<Work>> getAll(
             @RequestParam(value = "duration", required = false) Float duration,

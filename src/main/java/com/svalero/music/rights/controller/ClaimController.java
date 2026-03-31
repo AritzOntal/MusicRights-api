@@ -24,6 +24,7 @@ public class ClaimController {
         this.claimService = claimService;
     }
 
+    @RequestMapping("api/v1")
     @GetMapping("/claims")
     public ResponseEntity<List<Claim>> getAll(
             @RequestParam(value = "pending", required = false) Boolean pending,

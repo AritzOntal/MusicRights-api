@@ -27,6 +27,7 @@ public class MusicianController {
         this.musicianService = musicianService;
     }
 
+    @RequestMapping("api/v1")
     @GetMapping("/musicians")
     public ResponseEntity<List<Musician>> getALl(
             @RequestParam(value = "performanceFee", required = false) Float performanceFee,
