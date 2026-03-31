@@ -3,6 +3,7 @@ package com.svalero.music.rights.controller;
 import com.svalero.music.rights.domain.Claim;
 import com.svalero.music.rights.domain.Musician;
 import com.svalero.music.rights.domain.Work;
+import com.svalero.music.rights.dtos.MusicianInDto;
 import com.svalero.music.rights.dtos.MusicianOutDto;
 import com.svalero.music.rights.exception.DocumentNotFoundException;
 import com.svalero.music.rights.exception.ErrorResponse;
@@ -58,6 +59,13 @@ public class MusicianController {
         Musician saved = musicianService.add(musician);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+    }
+
+    @PostMapping("/v2/musicians")
+    public ResponseEntity<MusicianOutDto> createV2(@RequestBody @Valid MusicianInDto musicianDto) {
+        MusicianOutDto outDto = musicianService.addV2(musicianDto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(outDto);
     }
 
 
