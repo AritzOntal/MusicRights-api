@@ -27,8 +27,8 @@ public class DocumentController {
         this.documentService = documentService;
     }
 
-    @RequestMapping("api/v1")
-    @GetMapping("/documents")
+    @RequestMapping("api/")
+    @GetMapping("/v1/documents")
     public ResponseEntity<List<Document>> getAll(
             @RequestParam(value = "type", required = false) String type,
             @RequestParam(value = "complete", required = false) Boolean complete,
@@ -37,13 +37,13 @@ public class DocumentController {
         return documentService.findAll(type, complete, createAd);
     }
 
-    @GetMapping("/documents/{id}")
+    @GetMapping("/v1/documents/{id}")
     public ResponseEntity<Document> get(@PathVariable Long id) {
         Document document = documentService.findById(id);
         return ResponseEntity.ok().body(document);
     }
 
-    @PostMapping("/documents")
+    @PostMapping("/v1/documents")
     public ResponseEntity<Document> create(@RequestBody @Valid Document document) {
         documentService.add(document);
         Document saved = documentService.add(document);
@@ -51,20 +51,20 @@ public class DocumentController {
                                                                         // EL PERFORME SE FIJA EN ESTA RESPUESTA!!!
     }
 
-    @PutMapping("/documents/{id}")
+    @PutMapping("/v1/documents/{id}")
     public ResponseEntity<Document> update(@RequestBody @Valid Document document, @PathVariable Long id) {
         documentService.edit(id, document);
         return ResponseEntity.ok().body(document);
     }
 
-    @DeleteMapping("/documents/{id}")
+    @DeleteMapping("/v1/documents/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         documentService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     //FILTRADOS
-    @GetMapping("/documents/by-claim/{id}")
+    @GetMapping("/v1/documents/by-claim/{id}")
     public ResponseEntity<Document> getByClaim(@PathVariable Long id) throws ClaimNotFoundException {
         Document documentOfClaim = documentService.findByClaim(id);
         return ResponseEntity.ok().body(documentOfClaim);

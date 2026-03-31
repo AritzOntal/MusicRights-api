@@ -27,7 +27,7 @@ public class MusicianController {
         this.musicianService = musicianService;
     }
 
-    @RequestMapping("api/v1")
+    @RequestMapping("api/")
     @GetMapping("/musicians")
     public ResponseEntity<List<Musician>> getALl(
             @RequestParam(value = "performanceFee", required = false) Float performanceFee,
@@ -37,27 +37,27 @@ public class MusicianController {
         return musicianService.findAll(performanceFee, affiliated, birthDate);
     }
 
-    @GetMapping("/musicians/{id}")
+    @GetMapping("/v1/musicians/{id}")
     public ResponseEntity<Musician> get(@PathVariable Long id) {
         Musician musician = musicianService.findById(id);
         return ResponseEntity.ok().body(musician);
     }
 
 
-    @PostMapping("/musicians")
+    @PostMapping("/v1/musicians")
     public ResponseEntity<Musician> create(@RequestBody @Valid Musician musician) {
         Musician saved = musicianService.add(musician);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
 
-    @PutMapping("/musicians/{id}")
+    @PutMapping("/v1/musicians/{id}")
     public ResponseEntity<Musician> edit(@PathVariable Long id, @Valid @RequestBody Musician musician) {
         musicianService.edit(id, musician);
         return ResponseEntity.ok().body(musician);
     }
 
-    @DeleteMapping("/musicians/{id}")
+    @DeleteMapping("/v1/musicians/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id) {
         musicianService.delete(id);
         return ResponseEntity.noContent().build();
