@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
+@RequestMapping("api/")
 public class WorkController {
 
     private final WorkService workService;
@@ -26,7 +27,7 @@ public class WorkController {
 
     }
 
-    @GetMapping("/works")
+    @GetMapping("/v1/works")
     public ResponseEntity<List<Work>> getAll(
             @RequestParam(value = "duration", required = false) Float duration,
             @RequestParam(value = "composedAt", required = false) LocalDate composedAt,
@@ -35,25 +36,25 @@ public class WorkController {
         return workService.findAll(duration, composedAt, registred);
     }
 
-    @GetMapping("/works/{id}")
+    @GetMapping("/v1/works/{id}")
     public ResponseEntity<Work> get(@PathVariable Long id) {
         Work work = workService.findById(id);
         return ResponseEntity.ok().body(work);
     }
 
-    @PostMapping("/works")
+    @PostMapping("/v1/works")
     public ResponseEntity<Work> create(@RequestBody @Valid Work work) {
         workService.add(work);
         return ResponseEntity.status(HttpStatus.CREATED).body(work);
     }
 
-    @PutMapping("/works/{id}")
+    @PutMapping("/v1/works/{id}")
     public ResponseEntity<Work> update(@PathVariable Long id, @RequestBody @Valid Work work) {
         workService.edit(id, work);
         return ResponseEntity.ok().body(work);
     }
 
-    @DeleteMapping("/works/{id}")
+    @DeleteMapping("/v1/works/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         workService.delete(id);
         return ResponseEntity.noContent().build();

@@ -4,6 +4,7 @@ package com.svalero.music.rights.service;
 import com.svalero.music.rights.domain.Claim;
 import com.svalero.music.rights.domain.Musician;
 import com.svalero.music.rights.domain.Work;
+import com.svalero.music.rights.dtos.MusicianOutDto;
 import com.svalero.music.rights.exception.ClaimNotFoundException;
 import com.svalero.music.rights.exception.MusicianNotFoundException;
 import com.svalero.music.rights.exception.WorkNotFoundException;
@@ -56,7 +57,21 @@ public class MusicianService {
     public Musician findById(Long id) {
         Musician musician = musicianRepository.findById(id)
                 .orElseThrow(() -> new MusicianNotFoundException());
+
         return musician;
+    }
+
+    public MusicianOutDto findByIdV2(Long id) {
+        Musician musician = musicianRepository.findById(id)
+                .orElseThrow(() -> new MusicianNotFoundException());
+
+        MusicianOutDto outDto = new MusicianOutDto(
+                musician.getFirstName(),
+                musician.getLastName(),
+                musician.getDni()
+        );
+
+        return outDto;
     }
 
 

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("api/")
 public class ClaimController {
 
     private final ClaimService claimService;
@@ -34,13 +35,13 @@ public class ClaimController {
     }
 
 
-    @GetMapping("/claims/{id}")
+    @GetMapping("/v1/claims/{id}")
     public ResponseEntity<Claim> get(@PathVariable long id) throws ClaimNotFoundException {
         Claim claim = claimService.findById(id);
         return ResponseEntity.ok().body(claim);
     }
 
-    @PostMapping("/claims")
+    @PostMapping("/v1/claims")
 
     public ResponseEntity<Claim> create(@RequestBody @Valid Claim claim) {
         claimService.add(claim);
@@ -48,13 +49,13 @@ public class ClaimController {
     }
 
 
-    @PutMapping("/claims/{id}")
+    @PutMapping("/v1/claims/{id}")
     public ResponseEntity<Claim> update(@RequestBody @Valid Claim claim, @PathVariable long id) throws ClaimNotFoundException {
         Claim updatedClaim = claimService.modify(id, claim);
         return ResponseEntity.ok().body(updatedClaim);
     }
 
-    @DeleteMapping("/claims/{id}")
+    @DeleteMapping("/v1/claims/{id}")
     public ResponseEntity<Void> remove(@PathVariable long id) throws ClaimNotFoundException {
         claimService.delete(id);
         return ResponseEntity.noContent().build();
@@ -62,7 +63,7 @@ public class ClaimController {
 
 //FILTRADOS
 
-    @GetMapping("/claims/by-musician/{id}")
+    @GetMapping("/v1/claims/by-musician/{id}")
     public ResponseEntity<List<Claim>> getByMusician(@PathVariable long id) throws MusicianNotFoundException {
         List<Claim> claimsOfMusician = claimService.findByMusicianId(id);
         return ResponseEntity.ok().body(claimsOfMusician);

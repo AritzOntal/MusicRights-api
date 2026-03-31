@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("api/")
 public class ConcertController {
 
     private final ConcertService concertService;
@@ -28,32 +29,32 @@ public class ConcertController {
         return concertService.findAll(city, status, performed);
     }
 
-    @GetMapping("/concerts/{id}")
+    @GetMapping("/v1/concerts/{id}")
     public ResponseEntity<Concert> get( @PathVariable Long id) {
         Concert concert = concertService.findById(id);
         return ResponseEntity.status(HttpStatus.OK).body(concert);
     }
 
-    @PostMapping("/concerts")
+    @PostMapping("/v1/concerts")
     public ResponseEntity<Concert> create(@RequestBody @Valid Concert concert) {
         Concert saved = concertService.add(concert);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
-    @PutMapping("concerts/{id}")
+    @PutMapping("/v1/concerts/{id}")
     public ResponseEntity<Concert> update(@RequestBody @Valid Concert concert, @PathVariable Long id) {
         Concert updatedConcert = concertService.edit(id, concert);
         return ResponseEntity.status(HttpStatus.OK).body(updatedConcert);
     }
 
-    @DeleteMapping("/concerts/{id}")
+    @DeleteMapping("/v1/concerts/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         concertService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
     //FILTRADO JPQL
-    @GetMapping("concerts/by-musician/{id}")
+    @GetMapping("/v1/concerts/by-musician/{id}")
     public ResponseEntity<List<Concert>> getByMusician(@PathVariable Long id) {
         List<Concert> concertsOfMusician = concertService.findAllbyMusicianId(id);
         return ResponseEntity.status(HttpStatus.OK).body(concertsOfMusician);
