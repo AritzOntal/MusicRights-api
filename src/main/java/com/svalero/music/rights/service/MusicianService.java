@@ -4,6 +4,7 @@ package com.svalero.music.rights.service;
 import com.svalero.music.rights.domain.Claim;
 import com.svalero.music.rights.domain.Musician;
 import com.svalero.music.rights.domain.Work;
+import com.svalero.music.rights.dtos.MusicianInDto;
 import com.svalero.music.rights.dtos.MusicianOutDto;
 import com.svalero.music.rights.exception.ClaimNotFoundException;
 import com.svalero.music.rights.exception.MusicianNotFoundException;
@@ -45,6 +46,29 @@ public class MusicianService {
         }
         musician.setWorks(managedWorks); //Al músico le añadimos todas las works que hemos pillado
         return musicianRepository.save(musician);
+    }
+
+    public MusicianOutDto addV2(MusicianInDto inDto) {
+        Musician musician = new Musician();
+
+        musician.setFirstName(inDto.getFirstName());
+        musician.setLastName(inDto.getLastName());
+        musician.setDni(inDto.getDni());
+        musician.setPerformanceFee(null);
+        musician.setAffiliatedNumber(0);
+        musician.setWorks(null);
+        musician.setAffiliated(false);
+        musician.setClaims(null);
+
+        Musician musicianDb = musicianRepository.save(musician);
+
+        MusicianOutDto outDto = new MusicianOutDto();
+
+        outDto.setFirstName(musicianDb.getFirstName());
+        outDto.setLastName(musicianDb.getLastName());
+        outDto.setDni(musicianDb.getDni());
+
+        return outDto;
     }
 
     public ResponseEntity<List<Musician>> findAll(Float performanceFee, Boolean affiliated, LocalDate birthDate) {

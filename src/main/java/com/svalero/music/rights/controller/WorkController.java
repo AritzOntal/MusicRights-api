@@ -24,7 +24,6 @@ public class WorkController {
 
     public WorkController(WorkService workService) {
         this.workService = workService;
-
     }
 
     @GetMapping("/v1/works")
@@ -39,24 +38,28 @@ public class WorkController {
     @GetMapping("/v1/works/{id}")
     public ResponseEntity<Work> get(@PathVariable Long id) {
         Work work = workService.findById(id);
+
         return ResponseEntity.ok().body(work);
     }
 
     @PostMapping("/v1/works")
     public ResponseEntity<Work> create(@RequestBody @Valid Work work) {
         workService.add(work);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(work);
     }
 
     @PutMapping("/v1/works/{id}")
     public ResponseEntity<Work> update(@PathVariable Long id, @RequestBody @Valid Work work) {
         workService.edit(id, work);
+
         return ResponseEntity.ok().body(work);
     }
 
     @DeleteMapping("/v1/works/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         workService.delete(id);
+
         return ResponseEntity.noContent().build();
     }
 }
