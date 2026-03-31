@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
+@RequestMapping("api/")
 public class DocumentController {
 
     private final DocumentService documentService;
@@ -27,7 +28,6 @@ public class DocumentController {
         this.documentService = documentService;
     }
 
-    @RequestMapping("api/")
     @GetMapping("/v1/documents")
     public ResponseEntity<List<Document>> getAll(
             @RequestParam(value = "type", required = false) String type,

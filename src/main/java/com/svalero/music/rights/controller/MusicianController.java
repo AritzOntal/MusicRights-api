@@ -3,6 +3,7 @@ package com.svalero.music.rights.controller;
 import com.svalero.music.rights.domain.Claim;
 import com.svalero.music.rights.domain.Musician;
 import com.svalero.music.rights.domain.Work;
+import com.svalero.music.rights.dtos.MusicianOutDto;
 import com.svalero.music.rights.exception.DocumentNotFoundException;
 import com.svalero.music.rights.exception.ErrorResponse;
 import com.svalero.music.rights.exception.MusicianNotFoundException;
@@ -18,6 +19,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
+@RequestMapping("api/")
 public class MusicianController {
 
 
@@ -27,7 +29,6 @@ public class MusicianController {
         this.musicianService = musicianService;
     }
 
-    @RequestMapping("api/")
     @GetMapping("/musicians")
     public ResponseEntity<List<Musician>> getALl(
             @RequestParam(value = "performanceFee", required = false) Float performanceFee,
@@ -40,13 +41,22 @@ public class MusicianController {
     @GetMapping("/v1/musicians/{id}")
     public ResponseEntity<Musician> get(@PathVariable Long id) {
         Musician musician = musicianService.findById(id);
+
         return ResponseEntity.ok().body(musician);
+    }
+
+    @GetMapping("/v2/musicians/{id}")
+    public ResponseEntity<MusicianOutDto> getV2(@PathVariable Long id) {
+        MusicianOutDto dtoOut = musicianService.findByIdV2(id);
+
+        return ResponseEntity.ok().body(dtoOut);
     }
 
 
     @PostMapping("/v1/musicians")
     public ResponseEntity<Musician> create(@RequestBody @Valid Musician musician) {
         Musician saved = musicianService.add(musician);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
@@ -54,12 +64,14 @@ public class MusicianController {
     @PutMapping("/v1/musicians/{id}")
     public ResponseEntity<Musician> edit(@PathVariable Long id, @Valid @RequestBody Musician musician) {
         musicianService.edit(id, musician);
+
         return ResponseEntity.ok().body(musician);
     }
 
     @DeleteMapping("/v1/musicians/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id) {
         musicianService.delete(id);
+
         return ResponseEntity.noContent().build();
     }
 

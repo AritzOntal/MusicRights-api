@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
+@RequestMapping("api/")
 public class WorkController {
 
     private final WorkService workService;
@@ -26,7 +27,6 @@ public class WorkController {
 
     }
 
-    @RequestMapping("api/")
     @GetMapping("/v1/works")
     public ResponseEntity<List<Work>> getAll(
             @RequestParam(value = "duration", required = false) Float duration,

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("api/")
 public class ConcertController {
 
     private final ConcertService concertService;
@@ -19,7 +20,6 @@ public class ConcertController {
         this.concertService = concertService;
     }
 
-    @RequestMapping("api/")
     @GetMapping("/concerts")
     public ResponseEntity<List<Concert>> getAll(
             @RequestParam(value = "city", required = false) String city,
