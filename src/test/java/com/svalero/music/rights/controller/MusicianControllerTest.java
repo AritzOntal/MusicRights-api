@@ -219,7 +219,7 @@ public class MusicianControllerTest {
 
         Long notexistId = 1L;
 
-        Mockito.when(musicianService.edit(Mockito.eq(notexistId), Mockito.any(Musician.class)))
+        Mockito.when(musicianService.update(Mockito.eq(notexistId), Mockito.any(Musician.class)))
                 .thenThrow(new MusicianNotFoundException());
 
         mockMvc.perform(put("/musicians/{id}", notexistId)
@@ -274,7 +274,7 @@ public class MusicianControllerTest {
         musician.setWorks(works);
         musician.setClaims(claims);
 
-        Mockito.when(musicianService.edit(Mockito.any(Long.class), Mockito.any(Musician.class)))
+        Mockito.when(musicianService.update(Mockito.any(Long.class), Mockito.any(Musician.class)))
                 .thenReturn(Mockito.mock(Musician.class));
 
         mockMvc.perform(put("/musicians/{id}", idExist)

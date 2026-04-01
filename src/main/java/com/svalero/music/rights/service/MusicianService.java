@@ -1,12 +1,12 @@
 package com.svalero.music.rights.service;
 
 
-import com.svalero.music.rights.domain.Claim;
 import com.svalero.music.rights.domain.Musician;
 import com.svalero.music.rights.domain.Work;
+import com.svalero.music.rights.dtos.DeleteResponseDto;
 import com.svalero.music.rights.dtos.MusicianInDto;
 import com.svalero.music.rights.dtos.MusicianOutDto;
-import com.svalero.music.rights.exception.ClaimNotFoundException;
+import com.svalero.music.rights.dtos.MusicianUpdateConditionsDto;
 import com.svalero.music.rights.exception.MusicianNotFoundException;
 import com.svalero.music.rights.exception.WorkNotFoundException;
 import com.svalero.music.rights.repository.MusicianRepository;
@@ -79,29 +79,22 @@ public class MusicianService {
     }
 
     public Musician findById(Long id) {
-        Musician musician = musicianRepository.findById(id)
-                .orElseThrow(() -> new MusicianNotFoundException());
+        Musician musician = musicianRepository.findById(id).orElseThrow(() -> new MusicianNotFoundException());
 
         return musician;
     }
 
     public MusicianOutDto findByIdV2(Long id) {
-        Musician musician = musicianRepository.findById(id)
-                .orElseThrow(() -> new MusicianNotFoundException());
+        Musician musician = musicianRepository.findById(id).orElseThrow(() -> new MusicianNotFoundException());
 
-        MusicianOutDto outDto = new MusicianOutDto(
-                musician.getFirstName(),
-                musician.getLastName(),
-                musician.getDni()
-        );
+        MusicianOutDto outDto = new MusicianOutDto(musician.getFirstName(), musician.getLastName(), musician.getDni(), musician.getPerformanceFee(), musician.getAffiliated());
 
         return outDto;
     }
 
 
-    public Musician edit(long id, Musician updatedMusician) {
-        Musician musician = musicianRepository.findById(id)
-                .orElseThrow(() -> new MusicianNotFoundException());
+    public Musician update(long id, Musician updatedMusician) {
+        Musician musician = musicianRepository.findById(id).orElseThrow(() -> new MusicianNotFoundException());
 
         musician.setFirstName(updatedMusician.getFirstName());
         musician.setLastName(updatedMusician.getLastName());
@@ -114,10 +107,37 @@ public class MusicianService {
         return musician;
     }
 
+    public MusicianOutDto updateV2(long id, MusicianUpdateConditionsDto updatedMusician) {
+        Musician musician = musicianRepository.findById(id).orElseThrow(() -> new MusicianNotFoundException());
+
+        musician.setAffiliated(updatedMusician.getAffiliated());
+        musician.setPerformanceFee(updatedMusician.getPerformanceFee());
+
+        Musician musicianDb = musicianRepository.save(musician);
+
+        MusicianOutDto outDto = new MusicianOutDto();
+
+        outDto.setFirstName(musicianDb.getFirstName());
+        outDto.setLastName(musicianDb.getLastName());
+        outDto.setDni(musicianDb.getDni());
+        outDto.setPerformaceFee(musicianDb.getPerformanceFee());
+        outDto.setAffiliated(musicianDb.getAffiliated());
+
+        return outDto;
+    }
+
     public void delete(long id) {
         musicianRepository.deleteById(id);
     }
 
+    public DeleteResponseDto deleteV2(long id) {
+        musicianRepository.deleteById(id);
+
+        DeleteResponseDto outDto = new DeleteResponseDto();
+        outDto.setMessage("Músico borrado con exito");
+        outDto.setId(id);
+        return outDto;
+    }
 }
 
 //EN ESTA CLASE PROGRAMO PARA LA BASE DE DATOS (CAPA LÓGICA DONDE, ES LO MÁS LIBRE)

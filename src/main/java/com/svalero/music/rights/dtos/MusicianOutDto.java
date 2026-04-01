@@ -11,4 +11,6 @@ public class MusicianOutDto {
     private String firstName;
     private String lastName;
     private String dni;
+    private Float performaceFee;
+    private Boolean affiliated;
 }
