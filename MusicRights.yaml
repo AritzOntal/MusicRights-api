@@ -773,7 +773,7 @@ paths:
                 title: Not Found
                 message: No se puede eliminar la obra solicitada
 
-  /musicians:
+  /v1/musicians:
     get:
       summary: Listar músicos
       parameters:
@@ -814,6 +814,7 @@ paths:
                 message: Error al recuperar la lista de músicos
     post:
       summary: Registrar nuevo músico
+      deprecated: true
       requestBody:
         required: true
         content:
@@ -838,9 +839,10 @@ paths:
                 title: Validation Error
                 message: El músico ya existe o el DNI es inválido
 
-  /musicians/{id}:
+  /v1/musicians/{id}:
     get:
       summary: Obtener músico por id
+      deprecated: true
       parameters:
         - name: id
           in: path
@@ -875,6 +877,7 @@ paths:
                 message: Error inesperado al obtener datos del músico
     put:
       summary: Modificar datos del músico
+      deprecated: true
       parameters:
         - name: id
           in: path
@@ -913,6 +916,7 @@ paths:
                 message: No se puede editar un músico inexistente
     delete:
       summary: Eliminar músico
+      deprecated: true
       parameters:
         - name: id
           in: path
@@ -933,6 +937,78 @@ paths:
                 code: 404
                 title: Not Found
                 message: El músico a eliminar no existe
+
+  /v2/musicians:
+    post:
+      summary: Registrar nuevo músico (V2)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MusicianInDto'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Musician'
+
+  /v2/musicians/{id}:
+    get:
+      summary: Obtener músico por id (V2)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MusicianOutDto'
+    put:
+      summary: Modificar condiciones del músico (V2)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MusicianUpdateConditionsDto'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Musician'
+    delete:
+      summary: Eliminar músico (V2)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponseDto'
 
 components:
   schemas:
@@ -1087,6 +1163,49 @@ components:
           maximum: 100.0
         claim:
           $ref: '#/components/schemas/Claim'
+
+    MusicianInDto:
+      type: object
+      required: [ firstName, lastName, dni ]
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        birthDate:
+          type: string
+          format: date
+        dni:
+          type: string
+          pattern: '^\d{8}[A-Za-z]$'
+
+    MusicianOutDto:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        dni:
+          type: string
+
+    MusicianUpdateConditionsDto:
+      type: object
+      properties:
+        performanceFee:
+          type: number
+          format: float
+        affiliated:
+          type: boolean
+
+    DeleteResponseDto:
+      type: object
+      properties:
+        message:
+          type: string
+        id:
+          type: integer
+          format: int64
 
     ErrorResponse:
       type: object

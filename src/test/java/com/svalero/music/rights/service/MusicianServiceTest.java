@@ -11,13 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.MethodInvocationException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 
 import java.time.LocalDate;
@@ -26,7 +21,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -138,7 +132,7 @@ public class MusicianServiceTest {
                 .thenAnswer(inv -> inv.getArgument(0));
 
         //La lllamada de verdad
-        Musician result = musicianService.edit(existingId, newMusician);
+        Musician result = musicianService.update(existingId, newMusician);
         assertSame(musicianDb, result);
     }
 
@@ -155,7 +149,7 @@ public class MusicianServiceTest {
                 .thenThrow(MusicianNotFoundException.class);
 
         assertThrows(MusicianNotFoundException.class,
-                () -> musicianService.edit(noExist, newMusician));
+                () -> musicianService.update(noExist, newMusician));
     }
 
 

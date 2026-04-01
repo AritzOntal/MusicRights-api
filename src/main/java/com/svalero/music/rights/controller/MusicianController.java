@@ -1,16 +1,11 @@
 package com.svalero.music.rights.controller;
 
-import com.svalero.music.rights.domain.Claim;
 import com.svalero.music.rights.domain.Musician;
-import com.svalero.music.rights.domain.Work;
+import com.svalero.music.rights.dtos.DeleteResponseDto;
 import com.svalero.music.rights.dtos.MusicianInDto;
 import com.svalero.music.rights.dtos.MusicianOutDto;
-import com.svalero.music.rights.exception.DocumentNotFoundException;
-import com.svalero.music.rights.exception.ErrorResponse;
-import com.svalero.music.rights.exception.MusicianNotFoundException;
-import com.svalero.music.rights.exception.WorkNotFoundException;
+import com.svalero.music.rights.dtos.MusicianUpdateConditionsDto;
 import com.svalero.music.rights.service.MusicianService;
-import com.svalero.music.rights.service.WorkService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +25,7 @@ public class MusicianController {
         this.musicianService = musicianService;
     }
 
-    @GetMapping("/musicians")
+    @GetMapping("/v1/musicians")
     public ResponseEntity<List<Musician>> getALl(
             @RequestParam(value = "performanceFee", required = false) Float performanceFee,
             @RequestParam(value = "affiliated", required = false) Boolean affiliated,
@@ -71,9 +66,16 @@ public class MusicianController {
 
     @PutMapping("/v1/musicians/{id}")
     public ResponseEntity<Musician> edit(@PathVariable Long id, @Valid @RequestBody Musician musician) {
-        musicianService.edit(id, musician);
+        musicianService.update(id, musician);
 
         return ResponseEntity.ok().body(musician);
+    }
+
+    @PutMapping("/v2/musicians/{id}")
+    public ResponseEntity<MusicianOutDto> editV2(@PathVariable Long id, @Valid @RequestBody MusicianUpdateConditionsDto updatedMusician) {
+        MusicianOutDto outDto = musicianService.updateV2(id, updatedMusician);
+
+        return ResponseEntity.ok().body(outDto);
     }
 
     @DeleteMapping("/v1/musicians/{id}")
@@ -81,6 +83,13 @@ public class MusicianController {
         musicianService.delete(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/v2/musicians/{id}")
+    public ResponseEntity<DeleteResponseDto> deleteV2(@PathVariable long id) {
+        DeleteResponseDto musicanDel = musicianService.deleteV2(id);
+
+        return ResponseEntity.ok().body(musicanDel);
     }
 
 }
