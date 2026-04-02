@@ -1,13 +1,13 @@
-name: musicRights
+name: musicrights
 services:
   db:
     image: mariadb:11.3.2
     container_name: musicrights-db
     environment:
-      MYSQL_USER: 'musicrights_user'
-      MYSQL_PASSWORD: 'musicrights_password'
-      MYSQL_DATABASE: 'musicrights'
+      MYSQL_USER: $MARIADB_USER
+      MYSQL_PASSWORD: $MARIADB_PASSWORD
+      MYSQL_DATABASE: $MARIADB_DATABASE
       MYSQL_PORT: 3306
-      MYSQL_ROOT_PASSWORD: 'rootpassword'
+      MYSQL_ROOT_PASSWORD: MARIADB_ROOT_PASSWORD
     ports:
       - "3306:3306"
