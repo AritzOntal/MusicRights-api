@@ -1,3 +1,5 @@
+.env
+src/main/resources/application-dev.properties
 ### Maven / Spring Boot ###
 target/
 !.mvn/wrapper/maven-wrapper.jar
@@ -41,3 +43,4 @@ build/
 *.log
 # No ignorar el wrapper de Maven (necesario)
 !maven-wrapper.jar
+
