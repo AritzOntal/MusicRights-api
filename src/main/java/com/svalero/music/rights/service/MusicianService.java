@@ -127,6 +127,9 @@ public class MusicianService {
     }
 
     public void delete(long id) {
+        if (!musicianRepository.existsById(id)) {
+            throw new MusicianNotFoundException();
+        }
         musicianRepository.deleteById(id);
     }
 
