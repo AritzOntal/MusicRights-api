@@ -42,7 +42,6 @@ public class ClaimController {
     }
 
     @PostMapping("/v1/claims")
-
     public ResponseEntity<Claim> create(@RequestBody @Valid Claim claim) {
         claimService.add(claim);
         return ResponseEntity.status(HttpStatus.CREATED).body(claim);

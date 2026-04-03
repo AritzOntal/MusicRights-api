@@ -26,4 +26,4 @@ jobs:
           MARIADB_ROOT_PASSWORD: root_root
           PROFILE: prod
       - run: npm install -g newman
-      - run: newman run MusicRights API.postman_collection.json" -e Local.postman_environment.json
+      - run: newman run "MusicRights API.postman_collection.json" -e Local.postman_environment.json

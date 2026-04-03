@@ -620,12 +620,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/claims",
+              "raw": "{{HOST}}/api/v1/claims",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "claims"
               ]
             }
@@ -638,12 +639,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/claims/1",
+              "raw": "{{HOST}}/api/v1/claims/1",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "claims",
                 "1"
               ]
@@ -657,12 +659,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/claims?pending=true&status=open",
+              "raw": "{{HOST}}/api/v1/claims?pending=true&status=open",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "claims"
               ],
               "query": [
@@ -697,12 +700,13 @@
               "formdata": []
             },
             "url": {
-              "raw": "localhost:8080/claims/by-musician/7",
+              "raw": "{{HOST}}/api/v1/claims/by-musician/7",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "claims",
                 "by-musician",
                 "7"
@@ -726,12 +730,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/claims",
+              "raw": "{{HOST}}/api/v1/claims",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "claims"
               ]
             }
@@ -753,12 +758,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/claims/12",
+              "raw": "{{HOST}}/api/v1/claims/12",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "claims",
                 "12"
               ]
@@ -772,12 +778,13 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "localhost:8080/claims/2",
+              "raw": "{{HOST}}/api/v1/claims/2",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "claims",
                 "2"
               ]
@@ -808,12 +815,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/documents",
+              "raw": "{{HOST}}/api/v1/documents",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "documents"
               ]
             }
@@ -833,12 +841,13 @@
               "raw": "{\n  \"type\": \"Contrato\",\n  \"filename\": \"acuerdo_discografica.pdf\",\n  \"size\": 256000,\n  \"createAt\": \"2023-10-25\",\n  \"complete\": true,\n  \"completionPercentage\": 100.0,\n  \"claim\": {\n    \"id\": 1\n  }\n}"
             },
             "url": {
-              "raw": "localhost:8080/documents/67",
+              "raw": "{{HOST}}/api/v1/documents/67",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "documents",
                 "67"
               ]
@@ -852,12 +861,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/documents/by-claim/2",
+              "raw": "{{HOST}}/api/v1/documents/by-claim/2",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "documents",
                 "by-claim",
                 "2"
@@ -872,12 +882,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/documents?type=contrato&complete=true&createAd=2023-10-26",
+              "raw": "{{HOST}}/api/v1/documents?type=contrato&complete=true&createAd=2023-10-26",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "documents"
               ],
               "query": [
@@ -913,12 +924,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/documents",
+              "raw": "{{HOST}}/api/v1/documents",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "documents"
               ]
             }
@@ -940,12 +952,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/documents/1",
+              "raw": "{{HOST}}/api/v1/documents/1",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "documents",
                 "1"
               ]
@@ -963,12 +976,13 @@
               "raw": "{\n  \"type\": \"Contrato\",\n  \"filename\": \"acuerdo_discografica.pdf\",\n  \"size\": 256000,\n  \"createAt\": \"2023-10-25\",\n  \"complete\": true,\n  \"completionPercentage\": 100.0,\n  \"claim\": {\n    \"id\": 1\n  }\n}"
             },
             "url": {
-              "raw": "localhost:8080/documents/1",
+              "raw": "{{HOST}}/api/v1/documents/1",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "documents",
                 "1"
               ]
@@ -987,12 +1001,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/concerts",
+              "raw": "{{HOST}}/api/v1/concerts",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "concerts"
               ]
             }
@@ -1005,12 +1020,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/concerts/1",
+              "raw": "{{HOST}}/api/v1/concerts/1",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "concerts",
                 "1"
               ]
@@ -1024,12 +1040,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/claims/by-musician/7",
+              "raw": "{{HOST}}/api/v1/claims/by-musician/7",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "claims",
                 "by-musician",
                 "7"
@@ -1044,12 +1061,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/concerts?city=vitoria&status=sin respuesta&performed=true",
+              "raw": "{{HOST}}/api/v1/concerts?city=vitoria&status=sin respuesta&performed=true",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "concerts"
               ],
               "query": [
@@ -1085,12 +1103,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/concerts",
+              "raw": "{{HOST}}/api/v1/concerts",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "concerts"
               ]
             }
@@ -1112,12 +1131,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/concerts/24",
+              "raw": "{{HOST}}/api/v1/concerts/24",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "concerts",
                 "24"
               ]
@@ -1135,12 +1155,13 @@
               "raw": "{\n    \"showTitle\": \"Gran Concierto de Rock\",\n    \"city\": \"Madrid\",\n    \"province\": \"Madrid\",\n    \"date\": \"2025-11-25\",\n    \"status\": \"CONFIRMED\",\n    \"performed\": false,\n    \"ticketPrice\": 45.50\n}"
             },
             "url": {
-              "raw": "localhost:8080/concerts/45",
+              "raw": "{{HOST}}/api/v1/concerts/45",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "concerts",
                 "45"
               ]
@@ -1159,12 +1180,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/works/1",
+              "raw": "{{HOST}}/api/v1/works/1",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "works",
                 "1"
               ]
@@ -1178,12 +1200,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/works?duration=2.44&composedAt=1992-05-12&registred=true",
+              "raw": "{{HOST}}/api/v1/works?duration=2.44&composedAt=1992-05-12&registred=true",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "works"
               ],
               "query": [
@@ -1219,12 +1242,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/works",
+              "raw": "{{HOST}}/api/v1/works",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "works"
               ]
             }
@@ -1249,12 +1273,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/works",
+              "raw": "{{HOST}}/api/v1/works",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "works"
               ]
             }
@@ -1271,12 +1296,13 @@
               "raw": "{\n    \"showTitle\": \"Gran Concierto de Rock\",\n    \"city\": \"Madrid\",\n    \"province\": \"Madrid\",\n    \"date\": \"2025-11-25\",\n    \"status\": \"CONFIRMED\",\n    \"performed\": false,\n    \"ticketPrice\": 45.50,\n    \"musician\": {id:1}\n}"
             },
             "url": {
-              "raw": "localhost:8080/works/1",
+              "raw": "{{HOST}}/api/v1/works/1",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "works",
                 "1"
               ]
@@ -1294,12 +1320,13 @@
               "raw": "{\n  \"title\": \"Little sister\",\n  \"isrc\": \"ESABC2370123\",\n  \"genre\": \"Stoner\",\n  \"duration\": 2.35,\n  \"composedAt\": \"2023-05-06T21:30:00\",\n  \"registred\": true\n}"
             },
             "url": {
-              "raw": "localhost:8080/works/4",
+              "raw": "{{HOST}}/api/v1/works/4",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
+                "api",
+                "v1",
                 "works",
                 "4"
               ]
@@ -1318,14 +1345,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/api/v2/musicians/1",
+              "raw": "{{HOST}}/api/v1/musicians/1",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
                 "api",
-                "v2",
+                "v1",
                 "musicians",
                 "1"
               ]
@@ -1348,14 +1374,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/api/v2/musicians",
+              "raw": "{{HOST}}/api/v1/musicians",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
                 "api",
-                "v2",
+                "v1",
                 "musicians"
               ]
             }
@@ -1380,14 +1405,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/api/v2/musicians/1",
+              "raw": "{{HOST}}/api/v1/musicians/1",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
                 "api",
-                "v2",
+                "v1",
                 "musicians",
                 "1"
               ]
@@ -1405,14 +1429,13 @@
               "formdata": []
             },
             "url": {
-              "raw": "localhost:8080/api/v2/musicians/19",
+              "raw": "{{HOST}}/api/v1/musicians/19",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
                 "api",
-                "v2",
+                "v1",
                 "musicians",
                 "19"
               ]
