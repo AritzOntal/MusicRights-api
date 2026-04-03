@@ -1,0 +1,1456 @@
+{
+  "info": {
+    "_postman_id": "4fd7ab53-9f50-455b-bf2b-1e392fa46d42",
+    "name": "MusicRights API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "49889896",
+    "_collection_link": "https://go.postman.co/collection/49889896-4fd7ab53-9f50-455b-bf2b-1e392fa46d42?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Musicians",
+      "item": [
+        {
+          "name": "addMusician",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", () => {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test(\"Estructura de respuesta y valores con correctos\", () => {",
+                  "    pm.expect(pm.response.json()).to.have.property(\"id\");",
+                  "    pm.expect(pm.response.json()).to.have.property(\"firstName\");",
+                  "    pm.expect(pm.response.json()).to.have.property(\"birthDate\");",
+                  "    pm.expect(pm.response.json()).to.have.property(\"affiliated\");",
+                  "    pm.expect(pm.response.json()).to.have.property(\"dni\");",
+                  "    pm.expect(pm.response.json()).to.have.property(\"performanceFee\");",
+                  "    pm.expect(pm.response.json()).to.have.property(\"affiliatedNumber\");",
+                  "    pm.expect(pm.response.json()).to.have.property(\"works\");",
+                  "",
+                  "    var jsonData = pm.response.json();",
+                  "",
+                  "    pm.expect(jsonData.firstName).to.eql(\"Aritz\");",
+                  "    pm.expect(jsonData.lastName).to.eql(\"Ontalvilla\");",
+                  "    pm.expect(jsonData.affiliated).to.eql(true);",
+                  "    pm.expect(jsonData.birthDate).to.eql(\"1992-12-09\");",
+                  "    pm.expect(jsonData.dni).to.eql(\"12345678J\");",
+                  "    pm.expect(jsonData.performanceFee).to.eql(6.0);",
+                  "    pm.expect(jsonData.affiliatedNumber).to.eql(6666);",
+                  "    pm.expect(jsonData.works).to.eql([]);",
+                  "",
+                  "    pm.collectionVariables.set(\"musician_id\", jsonData.id)",
+                  "})"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Aritz\",\n    \"lastName\": \"Ontalvilla\",\n    \"birthDate\": \"1992-12-09\",\n    \"affiliated\": true,\n    \"dni\": \"12345678J\",\n    \"performanceFee\": 6,\n    \"affiliatedNumber\": 6666    \n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/musicians",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "musicians"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "addMusician2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Musician2\",\n    \"lastName\": \"Musician2LastName\",\n    \"birthDate\": \"1990-12-09\",\n    \"affiliated\": false,\n    \"dni\": \"12345677J\",\n    \"performanceFee\": 8,\n    \"affiliatedNumber\": 8888    \n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/musicians",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "musicians"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "addMusician (400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Error de validacion de DNI\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Musician2\",\n    \"lastName\": \"Musician2LastName\",\n    \"birthDate\": \"1990-12-09\",\n    \"affiliated\": false,\n    \"dni\": \"12345u77J\",\n    \"performanceFee\": 8,\n    \"affiliatedNumber\": 8888    \n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/musicians",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "musicians"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getMusicians",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Código de estado es 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"La respuesta es un Array y no está vacío\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "",
+                  "    pm.expect(jsonData).to.be.an(\"array\");",
+                  "    ",
+                  "    // El tamaño del array es mayor que 0",
+                  "    pm.expect(jsonData.length).to.be.above(0);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/musicians",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "musicians"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getMusician",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"La estrucutra y el id del musico registrado son correctos\", () => {",
+                  "    var jsonData = pm.response.json();",
+                  "",
+                  "    var idMusician = pm.collectionVariables.get(\"musician_id\");",
+                  "",
+                  "    pm.expect(jsonData.id).to.eql(idMusician);",
+                  "",
+                  "    pm.expect(jsonData).to.have.property(\"id\");",
+                  "    pm.expect(jsonData).to.have.property(\"firstName\");",
+                  "    pm.expect(jsonData).to.have.property(\"birthDate\");",
+                  "    pm.expect(jsonData).to.have.property(\"affiliated\");",
+                  "    pm.expect(jsonData).to.have.property(\"dni\");",
+                  "    pm.expect(jsonData).to.have.property(\"performanceFee\");",
+                  "    pm.expect(jsonData).to.have.property(\"affiliatedNumber\");",
+                  "    pm.expect(jsonData).to.have.property(\"works\");",
+                  "",
+                  "})"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/musicians/{{musician_id}}",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "musicians",
+                "{{musician_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getMusician?",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Se espera un Array con el filtrado correcto\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "",
+                  "    pm.expect(jsonData).to.be.an(\"array\");",
+                  "",
+                  "    pm.expect(jsonData.length).to.be.above(0);",
+                  "",
+                  "    //Iteración para comprobar si los musicos mostrados contienen estos resultados",
+                  "    jsonData.forEach(function (musician) {",
+                  "        pm.expect(musician.birthDate).to.eql(\"1990-12-09\");",
+                  "        pm.expect(musician.affiliated).to.be.false;",
+                  "        pm.expect(musician.performanceFee).to.eql(8);",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Aritz\",\n    \"lastName\": \"Ontalvilla\",\n    \"birthDate\": \"1992-12-09\",\n    \"affiliated\": true,\n    \"dni\": \"12345678J\",\n    \"performanceFee\": 6,\n    \"affiliatedNumber\": 6666    \n}"
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/musicians?affiliated=false&perfomanceFee=8&birthDate=1990-12-09",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "musicians"
+              ],
+              "query": [
+                {
+                  "key": "affiliated",
+                  "value": "false"
+                },
+                {
+                  "key": "perfomanceFee",
+                  "value": "8"
+                },
+                {
+                  "key": "birthDate",
+                  "value": "1990-12-09"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "edMusician",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"El código de estado es 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Modificacion de fecha es correcta\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    ",
+                  "    // Verificamos que la fecha a cambiado",
+                  "    pm.expect(jsonData.birthDate).to.eql(\"1982-05-12\");",
+                  "    ",
+                  "    // Verificamos que le id es el mismo",
+                  "    var musician_id = pm.collectionVariables.get(\"musician_id\");",
+                  "",
+                  "    pm.expect(jsonData.id).to.eql(musician_id);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Aritz\",\n    \"lastName\": \"Ontalvilla\",\n    \"birthDate\": \"1982-05-12\",\n    \"affiliated\": true,\n    \"dni\": \"45916140j\",\n    \"performanceFee\": 6.0,\n    \"affiliatedNumber\": 6666,\n    \"works\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/musicians/{{musician_id}}",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "musicians",
+                "{{musician_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "edMusician (404)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"El muísco no existe y devuelve 404\", function () {",
+                  "   pm.response.to.have.status(404);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Aritz\",\n    \"lastName\": \"Ontalvilla\",\n    \"birthDate\": \"1982-05-12\",\n    \"affiliated\": true,\n    \"dni\": \"45916140j\",\n    \"performanceFee\": 6.0,\n    \"affiliatedNumber\": 6666,\n    \"works\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/musicians/999",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "musicians",
+                "999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "edMusician (400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Error de validacion de las propiedades de músico\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lastName\": \"Ontalvilla\",\n  \"affiliated\": true,\n  \"dni\": \"12345678J\",\n  \"performanceFee\": -50.0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/musicians/{{musician_id}}",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "musicians",
+                "{{musician_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delMusician",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"El código de estado es 204 No Content\", function () {",
+                  "    pm.expect(pm.response.code).to.eql(204);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/musicians/{{musician_id}}",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "musicians",
+                "{{musician_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delMusician (404)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"El muísco no existe y devuelve 404\", function () {",
+                  "   pm.response.to.have.status(404);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/musicians/999",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "musicians",
+                "999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getMusician(deleted)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 404 Not Found al buscar el id de el musico antes borrado\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/musicians/{{musician_id}}",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "musicians",
+                "{{musician_id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Claims",
+      "item": [
+        {
+          "name": "getClaims",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/claims",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "claims"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getClaim",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/claims/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "claims",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getClaims?",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/claims?pending=true&status=open",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "claims"
+              ],
+              "query": [
+                {
+                  "key": "pending",
+                  "value": "true"
+                },
+                {
+                  "key": "status",
+                  "value": "open"
+                },
+                {
+                  "key": "type",
+                  "value": "refund",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getClaimsByMusician",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "localhost:8080/claims/by-musician/7",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "claims",
+                "by-musician",
+                "7"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "addClaims",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"reference\": \"12345178\",\n    \"status\": \"open\",\n    \"type\": \"refund\",\n    \"description\": \"Reclamacion por derechos en discoteca\",\n    \"pending\": true,\n    \"musician\": {\"id\": 7}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/claims",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "claims"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "edClaim",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"reference\": \"12345678\",\n    \"status\": \"Enviado\",\n    \"type\": \"Reclamación\",\n    \"description\": \"Reclamacion por derechos en discoteca Oslo\",\n    \"pending\": \"true\",\n    \"priorityLevel\": \"5.0\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/claims/12",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "claims",
+                "12"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delClaim",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/claims/2",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "claims",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Documents",
+      "item": [
+        {
+          "name": "getDocuments",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/documents",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "documents"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getDocument",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"Contrato\",\n  \"filename\": \"acuerdo_discografica.pdf\",\n  \"size\": 256000,\n  \"createAt\": \"2023-10-25\",\n  \"complete\": true,\n  \"completionPercentage\": 100.0,\n  \"claim\": {\n    \"id\": 1\n  }\n}"
+            },
+            "url": {
+              "raw": "localhost:8080/documents/67",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "documents",
+                "67"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getDocumentsByClaim",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/documents/by-claim/2",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "documents",
+                "by-claim",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getDocument?",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/documents?type=contrato&complete=true&createAd=2023-10-26",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "documents"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "contrato"
+                },
+                {
+                  "key": "complete",
+                  "value": "true"
+                },
+                {
+                  "key": "createAd",
+                  "value": "2023-10-26"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "postDocuments",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"Contrato\",\n  \"filename\": \"acuerdo_discografica.pdf\",\n  \"size\": 256000,\n  \"createAt\": \"2023-10-25\",\n  \"complete\": true,\n  \"completionPercentage\": 100.0,\n  \"claim\": {\n    \"id\": 1\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/documents",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "documents"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "putDocument",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"Contrato\",\n  \"filename\": \"acuerdo_discografica.pdf\",\n  \"size\": 256000,\n  \"createAt\": \"2023-10-25\",\n  \"complete\": true,\n  \"completionPercentage\": 100.0,\n  \"claim\": {\n    \"id\": 1\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/documents/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "documents",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delDocument",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"Contrato\",\n  \"filename\": \"acuerdo_discografica.pdf\",\n  \"size\": 256000,\n  \"createAt\": \"2023-10-25\",\n  \"complete\": true,\n  \"completionPercentage\": 100.0,\n  \"claim\": {\n    \"id\": 1\n  }\n}"
+            },
+            "url": {
+              "raw": "localhost:8080/documents/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "documents",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Concerts",
+      "item": [
+        {
+          "name": "getConcerts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/concerts",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "concerts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getConcert",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/concerts/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "concerts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getConcertsByMusician",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/claims/by-musician/7",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "claims",
+                "by-musician",
+                "7"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getConcert?",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/concerts?city=vitoria&status=sin respuesta&performed=true",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "concerts"
+              ],
+              "query": [
+                {
+                  "key": "city",
+                  "value": "vitoria"
+                },
+                {
+                  "key": "status",
+                  "value": "sin respuesta"
+                },
+                {
+                  "key": "performed",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "postConcert",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"showTitle\": \"Concierto\",\n    \"city\": \"Bilbao\",\n    \"province\": \"Bilbao\",\n    \"date\": \"2025-11-25\",\n    \"status\": \"CONFIRMED\",\n    \"performed\": false,\n    \"ticketPrice\": 45.50,\n    \"musician\": {\"id\":7}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/concerts",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "concerts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "putConcert",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n        \"showTitle\": \"balbal\",\n        \"city\": \"sadsa\",\n        \"province\": \"Bilbao\",\n        \"date\": \"2023-11-25\",\n        \"status\": \"CONFIRMED\",\n        \"performed\": true,\n        \"ticketPrice\": 80,\n        \"longitude\": -9.11313,\n        \"latitude\": 42.23121\n        }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/concerts/24",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "concerts",
+                "24"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delConcert",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"showTitle\": \"Gran Concierto de Rock\",\n    \"city\": \"Madrid\",\n    \"province\": \"Madrid\",\n    \"date\": \"2025-11-25\",\n    \"status\": \"CONFIRMED\",\n    \"performed\": false,\n    \"ticketPrice\": 45.50\n}"
+            },
+            "url": {
+              "raw": "localhost:8080/concerts/45",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "concerts",
+                "45"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Works",
+      "item": [
+        {
+          "name": "getWork",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/works/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "works",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getWork?",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/works?duration=2.44&composedAt=1992-05-12&registred=true",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "works"
+              ],
+              "query": [
+                {
+                  "key": "duration",
+                  "value": "2.44"
+                },
+                {
+                  "key": "composedAt",
+                  "value": "1992-05-12"
+                },
+                {
+                  "key": "registred",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "addWork",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Cumpleaños Feliz\",\n    \"isrc\": \"GBUM71014604\",\n    \"genre\": \"Rock\",\n    \"duration\": 354.0,\n    \"composedAt\": \"1975-10-31\",\n    \"registred\": true,\n    \"musicians\": [\n        { \"id\": 7 }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/works",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "works"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getWorks",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Aritz\",\n    \"lastName\": \"Ontalvilla\",\n    \"birthDate\": \"1992-09-12\",\n    \"afiiliated\": true,\n    \"dni\": \"45916040j\",\n    \"performanceFee\": 6,\n    \"affiliatedNumber\":123130,\n    \"musicians\": [{\n        \"id\": 2\n    }]\n\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/works",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "works"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "putWork",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"showTitle\": \"Gran Concierto de Rock\",\n    \"city\": \"Madrid\",\n    \"province\": \"Madrid\",\n    \"date\": \"2025-11-25\",\n    \"status\": \"CONFIRMED\",\n    \"performed\": false,\n    \"ticketPrice\": 45.50,\n    \"musician\": {id:1}\n}"
+            },
+            "url": {
+              "raw": "localhost:8080/works/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "works",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delWork",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Little sister\",\n  \"isrc\": \"ESABC2370123\",\n  \"genre\": \"Stoner\",\n  \"duration\": 2.35,\n  \"composedAt\": \"2023-05-06T21:30:00\",\n  \"registred\": true\n}"
+            },
+            "url": {
+              "raw": "localhost:8080/works/4",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "works",
+                "4"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "V2",
+      "item": [
+        {
+          "name": "getMusicianV2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/api/v2/musicians/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v2",
+                "musicians",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "addMusicianV2",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"pepe\",\n    \"lastName\": \"Jimenez\",\n    \"dni\": \"37485837J\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v2/musicians",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v2",
+                "musicians"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "edMusicianV2",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"id\": 1,\n    \"firstName\": \"Aritz\",\n    \"lastName\": \"Ontalvilla\",\n    \"birthDate\": \"1982-05-12\",\n    \"affiliated\": false,\n    \"dni\": \"45916140j\",\n    \"performanceFee\": 6.0,\n    \"affiliatedNumber\": 12313,\n    \"works\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/v2/musicians/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v2",
+                "musicians",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delMusicianV2",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "localhost:8080/api/v2/musicians/19",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v2",
+                "musicians",
+                "19"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "musician_id",
+      "value": ""
+    }
+  ]
+}
