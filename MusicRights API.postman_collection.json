@@ -1345,14 +1345,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:8080/api/v2/musicians/1",
+              "raw": "{{HOST}}/api/v1/musicians/1",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
                 "api",
-                "v2",
+                "v1",
                 "musicians",
                 "1"
               ]
@@ -1375,14 +1374,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/api/v2/musicians",
+              "raw": "{{HOST}}/api/v1/musicians",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
                 "api",
-                "v2",
+                "v1",
                 "musicians"
               ]
             }
@@ -1407,14 +1405,13 @@
               }
             },
             "url": {
-              "raw": "localhost:8080/api/v2/musicians/1",
+              "raw": "{{HOST}}/api/v1/musicians/1",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
                 "api",
-                "v2",
+                "v1",
                 "musicians",
                 "1"
               ]
@@ -1432,14 +1429,13 @@
               "formdata": []
             },
             "url": {
-              "raw": "localhost:8080/api/v2/musicians/19",
+              "raw": "{{HOST}}/api/v1/musicians/19",
               "host": [
-                "localhost"
+                "{{HOST}}"
               ],
-              "port": "8080",
               "path": [
                 "api",
-                "v2",
+                "v1",
                 "musicians",
                 "19"
               ]
