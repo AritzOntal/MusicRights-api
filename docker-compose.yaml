@@ -25,7 +25,7 @@ services:
     ports:
       - "8085:8085"
     depends_on:
-      musicricghts-db:
+      musicrights-db:
         condition: service_healthy
     environment:
       MUSICRIGHTS_DATABASE_PASSWORD: $MUSICRIGHTS_DATABASE_PASSWORD
