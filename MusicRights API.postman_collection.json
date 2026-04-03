@@ -1345,13 +1345,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{HOST}}/api/v1/musicians/1",
+              "raw": "{{HOST}}/api/v2/musicians/1",
               "host": [
                 "{{HOST}}"
               ],
               "path": [
                 "api",
-                "v1",
+                "v2",
                 "musicians",
                 "1"
               ]
@@ -1374,13 +1374,13 @@
               }
             },
             "url": {
-              "raw": "{{HOST}}/api/v1/musicians",
+              "raw": "{{HOST}}/api/v2/musicians",
               "host": [
                 "{{HOST}}"
               ],
               "path": [
                 "api",
-                "v1",
+                "v2",
                 "musicians"
               ]
             }
@@ -1405,13 +1405,13 @@
               }
             },
             "url": {
-              "raw": "{{HOST}}/api/v1/musicians/1",
+              "raw": "{{HOST}}/api/v2/musicians/1",
               "host": [
                 "{{HOST}}"
               ],
               "path": [
                 "api",
-                "v1",
+                "v2",
                 "musicians",
                 "1"
               ]
@@ -1429,13 +1429,13 @@
               "formdata": []
             },
             "url": {
-              "raw": "{{HOST}}/api/v1/musicians/19",
+              "raw": "{{HOST}}/api/v2/musicians/19",
               "host": [
                 "{{HOST}}"
               ],
               "path": [
                 "api",
-                "v1",
+                "v2",
                 "musicians",
                 "19"
               ]
