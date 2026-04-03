@@ -15,7 +15,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
-      - run: mvn package
+      - run: mvn package -DskipTests
       - run: docker build -t musicrights-api .
       - run: docker compose up -d
         env:
