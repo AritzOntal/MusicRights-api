@@ -1,6 +1,6 @@
 name: musicRights
 services:
-  musicricghts-db:
+  musicrights-db:
     image: mariadb:11.3.2
     container_name: musicrights-db
     restart: always
