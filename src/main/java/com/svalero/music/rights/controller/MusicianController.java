@@ -66,9 +66,9 @@ public class MusicianController {
 
     @PutMapping("/v1/musicians/{id}")
     public ResponseEntity<Musician> edit(@PathVariable Long id, @Valid @RequestBody Musician musician) {
-        musicianService.update(id, musician);
+        Musician updatedMusician = musicianService.update(id, musician);
 
-        return ResponseEntity.ok().body(musician);
+        return ResponseEntity.ok().body(updatedMusician);
     }
 
     @PutMapping("/v2/musicians/{id}")
