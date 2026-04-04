@@ -20,7 +20,7 @@ services:
       - network-musicrights
 
   musicrights-api:
-    build: musicrights
+    build: .
     container_name: musicrights-api
     ports:
       - "80:8085"
