@@ -4,7 +4,7 @@ info:
   description: API para la gestión y automatización de reclamo de Royalties.
   version: 1.0.0
 servers:
-  - url: http://localhost:8080/api
+  - url: http://localhost:8085/api
     description: Servidor Local
 
 paths:

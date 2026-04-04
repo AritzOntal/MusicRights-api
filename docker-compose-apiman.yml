@@ -1,0 +1,17 @@
+services:
+  apiman:
+    image: apiman/on-wildfly:2.2.3.Final
+    container_name: apiman
+    platform: linux/amd64
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    environment:
+      - APIMAN_LOGGING_LEVEL=INFO
+    networks:
+      - enlace-externo
+
+networks:
+  enlace-externo:
+    external: true
+    name: musicrights_network-musicrights
