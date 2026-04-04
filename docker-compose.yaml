@@ -1,4 +1,4 @@
-name: musicRights
+name: musicrights
 services:
   musicrights-db:
     image: mariadb:11.3.2
@@ -8,10 +8,9 @@ services:
       MYSQL_USER: $MARIADB_USER
       MYSQL_PASSWORD: $MUSICRIGHTS_DATABASE_PASSWORD
       MYSQL_DATABASE: $MARIADB_DATABASE
-      MYSQL_PORT: 3306
       MYSQL_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
-    ports:
-      - "3306:3306"
+    volumes:
+      - musicrights-db-data:/var/lib/mysql
     healthcheck:
       test: [ CMD, healthcheck.sh, --connect, --innodb_initialized ]
       interval: 5s
@@ -19,11 +18,12 @@ services:
       retries: 3
     networks:
       - network-musicrights
+
   musicrights-api:
     image: musicrights-api
     container_name: musicrights-api
     ports:
-      - "8085:8085"
+      - "80:8085"
     depends_on:
       musicrights-db:
         condition: service_healthy
@@ -32,6 +32,10 @@ services:
       SPRING_PROFILES_ACTIVE: $PROFILE
     networks:
       - network-musicrights
+
+volumes:
+  musicrights-db-data:
+
 networks:
   network-musicrights:
     driver: bridge
