@@ -59,4 +59,7 @@ public class Musician {
     @JsonIgnore
     @OneToMany(mappedBy = "musician")
     private List<Claim> claims;
+
+    @OneToOne(mappedBy = "musician", optional = true)
+    private User user;
 }

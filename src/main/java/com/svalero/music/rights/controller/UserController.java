@@ -1,7 +1,7 @@
 package com.svalero.music.rights.controller;
 
 import com.svalero.music.rights.domain.User;
-import com.svalero.music.rights.service.UserService;
+import com.svalero.music.rights.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,18 +12,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/")
-public class AuthController {
+public class UserController {
 
-    private final UserService userService;
+    private final AuthService authService;
 
-    public AuthController(UserService authService) {
-        this.userService = authService;
+    public UserController(AuthService authService) {
+        this.authService = authService;
     }
 
     @PostMapping("/v1/users")
-    public ResponseEntity<User> create(@RequestBody @Valid User user) {
-        userService.add(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    public ResponseEntity<User> create(@RequestBody @Valid String username, String password) {
+        authService.register(username, password);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 }
