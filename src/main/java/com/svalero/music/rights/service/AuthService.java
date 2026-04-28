@@ -18,6 +18,7 @@ public class AuthService {
     public AuthService(BCryptPasswordEncoder passwordEncoder, UserRepository userRepository, JwtUtils jwtUtils) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
+        this.jwtUtils = jwtUtils;
     }
 
     public User register(String username, String password) {

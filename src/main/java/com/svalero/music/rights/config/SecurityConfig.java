@@ -5,12 +5,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
@@ -36,8 +38,8 @@ public class SecurityConfig {
                         .requestMatchers("/error").permitAll()
 
                         // LECTURA (GET)
-                        .requestMatchers(HttpMethod.GET, "/api/v1/users/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/works/**").hasAnyRole("USER", "MUSICIAN", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/users/**", "/api/v1/users").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/works/**", "/api/v1/works").hasAnyRole("USER", "MUSICIAN", "ADMIN")
 
                         // (POST, PUT, DELETE)
                         .requestMatchers("/api/v1/works/**").hasAnyRole("MUSICIAN", "ADMIN")

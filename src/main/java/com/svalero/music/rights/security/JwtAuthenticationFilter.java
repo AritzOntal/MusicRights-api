@@ -26,12 +26,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
+        System.out.println("DEBUG: Petición recibida en el filtro para: " + request.getRequestURI());
+
         // Buscamos el header Authorization
         String authHeader = request.getHeader("Authorization");
 
         // Si trae el token con el formato "Bearer <token>"
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
+            System.out.println("DEBUG: Entrando en el IF del token");
 
             if (jwtUtils.validateToken(token)) {
                 String username = jwtUtils.getUsernameFromToken(token);
