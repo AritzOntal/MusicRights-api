@@ -21,9 +21,8 @@ public class UserController {
     }
 
     @PostMapping("/v1/users")
-    public ResponseEntity<User> create(@RequestBody @Valid String username, String password) {
-        authService.register(username, password);
-
+    public ResponseEntity<User> create(@RequestBody User user) {
+        authService.register(user.getUsername(), user.getPassword());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

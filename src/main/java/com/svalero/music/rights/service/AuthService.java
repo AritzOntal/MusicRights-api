@@ -20,7 +20,6 @@ public class AuthService {
         this.userRepository = userRepository;
     }
 
-
     public User register(String username, String password) {
         if (userRepository.findByUsername(username).isPresent()) {
             throw new RuntimeException("El nombre de usuario ya está en uso");
