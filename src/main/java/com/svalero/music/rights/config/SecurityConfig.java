@@ -15,6 +15,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
+    static {
+        System.out.println("********** DEBUG: JVM ha cargado la clase SecurityConfig **********");
+    }
+
     private final JwtAuthenticationFilter jwtAuthFilter;
 
     public SecurityConfig(JwtAuthenticationFilter jwtAuthFilter) {
@@ -29,16 +33,17 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        System.out.println(">>> EJECUTANDO: Configuración de seguridad aplicada correctamente <<<");
+
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         // PÚBLICAS
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
-                        .requestMatchers("/error").permitAll()
+                        .requestMatchers("/error", "/error/**").permitAll()
 
                         // LECTURA (GET)
-                        .requestMatchers(HttpMethod.GET, "/api/v1/users/**", "/api/v1/users").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/works/**", "/api/v1/works").hasAnyRole("USER", "MUSICIAN", "ADMIN")
 
                         // (POST, PUT, DELETE)
