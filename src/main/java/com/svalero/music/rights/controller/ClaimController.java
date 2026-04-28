@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/")
+@RequestMapping("/api")
 public class ClaimController {
 
     private final ClaimService claimService;
@@ -25,7 +25,7 @@ public class ClaimController {
         this.claimService = claimService;
     }
 
-    @GetMapping("/claims")
+    @GetMapping("/v1/claims")
     public ResponseEntity<List<Claim>> getAll(
             @RequestParam(value = "pending", required = false) Boolean pending,
             @RequestParam(value = "status", required = false) String status,
