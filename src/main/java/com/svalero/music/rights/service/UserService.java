@@ -26,4 +26,36 @@ public class UserService {
     public ResponseEntity<List<User>> findAll() {
         return ResponseEntity.ok(userRepository.findAll());
     }
+
+    public ResponseEntity<User> update(long id, User user) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        User existingUser = optionalUser.get();
+        existingUser.setUsername(user.getUsername());
+        existingUser.setPassword(user.getPassword());
+        existingUser.setRole(user.getRole());
+        existingUser.setMusician(user.getMusician());
+        return ResponseEntity.ok(userRepository.save(existingUser));
+    }
+
+    public ResponseEntity<Void> delete(long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        userRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    public ResponseEntity<User> updateRole(long id, String role) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        User existingUser = optionalUser.get();
+        existingUser.setRole(role);
+        return ResponseEntity.ok(userRepository.save(existingUser));
+    }
 }
