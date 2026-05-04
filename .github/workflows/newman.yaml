@@ -20,12 +20,12 @@ jobs:
       - run: docker compose up -d
         env:
           # Enchufamos ls variables en el sistema
-          MUSICRIGHTS_DATABASE_PASSWORD: root_password
           MARIADB_USER: musicrights_user
           MARIADB_DATABASE: musicrights
           MARIADB_ROOT_PASSWORD: root_root
           PROFILE: prod
 
+          MUSICRIGHTS_DATABASE_PASSWORD: root_password
       - run: sleep 45
       - run: npm install -g newman
-      - run: newman run "MusicRights API.postman_collection.json" -e Local.postman_environment.json
+      - run: newman run "MusicRights API.postman_collection.json" -e Local.postman_environment.json --env-var "HOST=localhost:80"
