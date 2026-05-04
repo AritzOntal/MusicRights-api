@@ -18,15 +18,31 @@ jobs:
       - run: mvn package -DskipTests
       - run: docker compose up -d --build
         env:
-          # Enchufamos ls variables en el sistema
           MARIADB_USER: musicrights_user
           MARIADB_DATABASE: musicrights
           MARIADB_ROOT_PASSWORD: root_root
           PROFILE: prod
-
           MUSICRIGHTS_DATABASE_PASSWORD: root_password
       - run: sleep 30
       - run: docker logs musicrights-api
       - run: docker ps
       - run: npm install -g newman
       - run: newman run "MusicRights API.postman_collection.json" -e Local.postman_environment.json --env-var "HOST=localhost:8085"
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: newman-test
+    steps:
+      - name: Deploy en EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            if [ ! -d "MusicRights2" ]; then
+              git clone https://github.com/AritzOntal/MusicRights2.git
+            fi
+            cd MusicRights2
+            git pull origin feature/jwt
+            docker compose up -d --build
