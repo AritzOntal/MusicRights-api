@@ -1,2 +1,2 @@
 INSERT IGNORE INTO users (username, password, role)
-VALUES ('admin', '$2a$10$saD9MCcu09SOKXODZlqiP.X1kUqJEOI.gbKvtTGNI0lzY9CHGZble', 'ROLE_ADMIN');
+VALUES ('admin', '$2a$12$D7NM6kQFBKWD6c70BTLF1e6R9e5Fha97.IEmTr6LIQUiiegk26Vxy', 'ROLE_ADMIN');
