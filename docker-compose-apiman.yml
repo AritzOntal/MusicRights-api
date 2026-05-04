@@ -8,8 +8,13 @@ services:
       - "8443:8443"
     environment:
       - APIMAN_LOGGING_LEVEL=INFO
+    volumes:
+      - apiman-data:/opt/jboss/wildfly/standalone/data
     networks:
       - enlace-externo
+
+volumes:
+  apiman-data:
 
 networks:
   enlace-externo:
