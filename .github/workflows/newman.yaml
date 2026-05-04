@@ -16,8 +16,7 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
       - run: mvn package -DskipTests
-      - run: docker build -t musicrights-api .
-      - run: docker compose up -d
+      - run: docker compose up -d --build
         env:
           # Enchufamos ls variables en el sistema
           MARIADB_USER: musicrights_user
@@ -27,6 +26,5 @@ jobs:
 
           MUSICRIGHTS_DATABASE_PASSWORD: root_password
       - run: sleep 15
-          - run: curl -v -X POST http://localhost/api/auth/login -H "Content-Type: application/json" -d '{"username":"admin","password":"tu_password"}'
       - run: npm install -g newman
       - run: newman run "MusicRights API.postman_collection.json" -e Local.postman_environment.json --env-var "HOST=localhost:8085"
