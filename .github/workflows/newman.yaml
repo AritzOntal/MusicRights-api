@@ -45,4 +45,5 @@ jobs:
             fi
             cd MusicRights2
             git pull origin feature/jwt
+            mvn package -DskipTests
             docker-compose up -d --build
