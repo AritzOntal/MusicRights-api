@@ -44,6 +44,6 @@ jobs:
               git clone https://github.com/AritzOntal/MusicRights2.git
             fi
             cd MusicRights2
-            git pull origin feature/jwt
+            git pull origin develop
             mvn package -DskipTests
             docker-compose up -d --build
