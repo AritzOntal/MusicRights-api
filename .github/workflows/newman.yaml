@@ -26,8 +26,7 @@ jobs:
           PROFILE: prod
 
           MUSICRIGHTS_DATABASE_PASSWORD: root_password
-      - run: sleep 45
-      - run: docker logs musicrights-db
-      - run: docker logs musicrights-api
+      - run: sleep 15
+          - run: curl -v -X POST http://localhost/api/auth/login -H "Content-Type: application/json" -d '{"username":"admin","password":"tu_password"}'
       - run: npm install -g newman
       - run: newman run "MusicRights API.postman_collection.json" -e Local.postman_environment.json --env-var "HOST=localhost:8085"
