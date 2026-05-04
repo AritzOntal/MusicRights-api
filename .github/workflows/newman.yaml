@@ -25,6 +25,6 @@ jobs:
           PROFILE: prod
 
           MUSICRIGHTS_DATABASE_PASSWORD: root_password
-      - run: sleep 15
+      - run: sleep 30
       - run: npm install -g newman
       - run: newman run "MusicRights API.postman_collection.json" -e Local.postman_environment.json --env-var "HOST=localhost:8085"
