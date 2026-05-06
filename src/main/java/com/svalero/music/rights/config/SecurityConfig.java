@@ -33,9 +33,11 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        System.out.println(">>> EJECUTANDO: Configuración de seguridad aplicada correctamente <<<");
 
         http
+                .headers(headers -> headers
+                        .cacheControl(cache -> cache.disable())
+                )
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         // PÚBLICAS

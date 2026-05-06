@@ -7,12 +7,15 @@ import com.svalero.music.rights.dtos.MusicianOutDto;
 import com.svalero.music.rights.dtos.MusicianUpdateConditionsDto;
 import com.svalero.music.rights.service.MusicianService;
 import jakarta.validation.Valid;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/api")
@@ -31,21 +34,29 @@ public class MusicianController {
             @RequestParam(value = "affiliated", required = false) Boolean affiliated,
             @RequestParam(value = "birthDate", required = false) LocalDate birthDate
     ) {
-        return musicianService.findAll(performanceFee, affiliated, birthDate);
+        ResponseEntity<List<Musician>> response = musicianService.findAll(performanceFee, affiliated, birthDate);
+
+        return ResponseEntity.status(response.getStatusCode())
+                .cacheControl(CacheControl.maxAge(120, TimeUnit.SECONDS).cachePublic())
+                .body(response.getBody());
     }
 
     @GetMapping("/v1/musicians/{id}")
     public ResponseEntity<Musician> get(@PathVariable Long id) {
         Musician musician = musicianService.findById(id);
 
-        return ResponseEntity.ok().body(musician);
+        return ResponseEntity.ok()
+                .cacheControl(CacheControl.maxAge(120, TimeUnit.SECONDS).cachePublic())
+                .body(musician);
     }
 
     @GetMapping("/v2/musicians/{id}")
     public ResponseEntity<MusicianOutDto> getV2(@PathVariable Long id) {
         MusicianOutDto dtoOut = musicianService.findByIdV2(id);
 
-        return ResponseEntity.ok().body(dtoOut);
+        return ResponseEntity.ok()
+                .cacheControl(CacheControl.maxAge(120, TimeUnit.SECONDS).cachePublic())
+                .body(dtoOut);
     }
 
 
