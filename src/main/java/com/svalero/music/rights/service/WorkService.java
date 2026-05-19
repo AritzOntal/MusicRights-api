@@ -39,20 +39,35 @@ public class WorkService {
 
     public Work add(Work work) {
         List<Musician> musicianList = work.getMusicians();
+        List<Musician> musiciansDb = new ArrayList<>();
 
         if (musicianList != null) {
-
-            List<Musician> musiciansDb = new ArrayList<>();
-
             for (Musician musician : musicianList) {
                 long idMusician = musician.getId();
                 Musician musicianDb = musicianRepository.findById(idMusician)
                         .orElseThrow(MusicianNotFoundException::new);
                 musiciansDb.add(musicianDb);
-
             }
-            work.setMusicians(musiciansDb);
         }
+
+        // Si el creador es MUSICIAN, le asociamos automáticamente su propio Musician
+        // a la obra (para que luego la vea en GET /works, que filtra por musician_id).
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isMusician = auth != null && auth.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_MUSICIAN"));
+        if (isMusician) {
+            Optional<User> userOpt = userRepository.findByUsername(auth.getName());
+            if (userOpt.isPresent() && userOpt.get().getMusician() != null) {
+                Musician own = userOpt.get().getMusician();
+                boolean alreadyIncluded = musiciansDb.stream()
+                        .anyMatch(m -> m.getId().equals(own.getId()));
+                if (!alreadyIncluded) {
+                    musiciansDb.add(own);
+                }
+            }
+        }
+
+        work.setMusicians(musiciansDb);
         return workRepository.save(work);
     }
 

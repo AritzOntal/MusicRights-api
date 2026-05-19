@@ -52,6 +52,9 @@ public class SecurityConfig {
                         .requestMatchers("/error", "/error/**").permitAll()
                         .requestMatchers("/api/v1/users/**").permitAll()
 
+                        // Un usuario logueado puede convertirse a sí mismo en músico
+                        .requestMatchers(HttpMethod.POST, "/api/v1/musicians/me").hasAnyRole("USER", "MUSICIAN")
+
                         // LECTURA (GET)
                         .requestMatchers(HttpMethod.GET, "/api/v1/works/**", "/api/v1/works").hasAnyRole("USER", "MUSICIAN", "ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/v1/musicians/**", "/api/v1/musicians").hasAnyRole("USER", "MUSICIAN", "ADMIN")

@@ -2,6 +2,7 @@ package com.svalero.music.rights.service;
 
 
 import com.svalero.music.rights.domain.Musician;
+import com.svalero.music.rights.domain.User;
 import com.svalero.music.rights.domain.Work;
 import com.svalero.music.rights.dtos.DeleteResponseDto;
 import com.svalero.music.rights.dtos.MusicianInDto;
@@ -10,9 +11,12 @@ import com.svalero.music.rights.dtos.MusicianUpdateConditionsDto;
 import com.svalero.music.rights.exception.MusicianNotFoundException;
 import com.svalero.music.rights.exception.WorkNotFoundException;
 import com.svalero.music.rights.repository.MusicianRepository;
+import com.svalero.music.rights.repository.UserRepository;
 import com.svalero.music.rights.repository.WorkRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,10 +28,50 @@ public class MusicianService {
 
     private MusicianRepository musicianRepository;
     private WorkRepository workRepository; //REFERENCIA AL REPOSITORIO POR AUTOWIRED
+    private UserRepository userRepository;
 
-    public MusicianService(MusicianRepository musicianRepository, WorkRepository workRepository) { //MEJOR CON CONSTRUCTOR QUE CON AUTOWIRED
+    public MusicianService(MusicianRepository musicianRepository,
+                           WorkRepository workRepository,
+                           UserRepository userRepository) { //MEJOR CON CONSTRUCTOR QUE CON AUTOWIRED
         this.musicianRepository = musicianRepository;
         this.workRepository = workRepository;
+        this.userRepository = userRepository;
+    }
+
+    /**
+     * Crea la ficha de músico del usuario que está logueado en ese momento
+     * y promociona al usuario a ROLE_MUSICIAN. Si el usuario ya tenía un
+     * Musician asociado, lanza un error.
+     */
+    public Musician becomeMusician(Musician input) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null) {
+            throw new RuntimeException("No hay usuario autenticado");
+        }
+
+        User user = userRepository.findByUsername(auth.getName())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        if (user.getMusician() != null) {
+            throw new RuntimeException("El usuario ya tiene una ficha de músico asociada");
+        }
+
+        // Defaults seguros por si el cliente no los envía
+        if (input.getAffiliated() == null) {
+            input.setAffiliated(false);
+        }
+        input.setId(null);
+        input.setWorks(null);
+        input.setClaims(null);
+
+        Musician saved = musicianRepository.save(input);
+
+        // Asociamos el musician al user y subimos su rol
+        user.setMusician(saved);
+        user.setRole("ROLE_MUSICIAN");
+        userRepository.save(user);
+
+        return saved;
     }
 
     //TODO ENTEDER COMO LO METE TODO EN LA TABLA N a N

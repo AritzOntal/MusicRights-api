@@ -56,6 +56,14 @@ public class MusicianController {
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
+    // Endpoint para que un usuario logueado se convierta en músico:
+    // crea su ficha de Musician, la asocia a su User y le sube el rol a ROLE_MUSICIAN.
+    @PostMapping("/v1/musicians/me")
+    public ResponseEntity<Musician> becomeMusician(@RequestBody @Valid Musician musician) {
+        Musician saved = musicianService.becomeMusician(musician);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+    }
+
     @PostMapping("/v2/musicians")
     public ResponseEntity<MusicianOutDto> createV2(@RequestBody @Valid MusicianInDto musicianDto) {
         MusicianOutDto outDto = musicianService.addV2(musicianDto);
