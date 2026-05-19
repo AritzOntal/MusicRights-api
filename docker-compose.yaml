@@ -21,7 +21,7 @@ services:
 
   musicrights-api:
     build: .
-    image: musicrights-api-apiman
+    image: musicrights-api
     container_name: musicrights-api
     ports:
       - "8085:8085"
