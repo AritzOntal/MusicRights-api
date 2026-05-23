@@ -75,8 +75,23 @@ public class ConcertService {
     }
 
     public ResponseEntity<List<Concert>> findAll(String city, String status, Boolean performed) {
-        List<Concert> concerts;
-        concerts = concertRepository.findByFilters(city, status, performed);
+        // Si el usuario autenticado es MUSICIAN, devolvemos solo sus propios conciertos.
+        // USER y ADMIN siguen viendo todos los conciertos (con los filtros opcionales).
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isMusician = auth != null && auth.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_MUSICIAN"));
+
+        if (isMusician) {
+            Optional<User> userOpt = userRepository.findByUsername(auth.getName());
+            // Si el músico no tiene Musician asociado todavía, devolvemos lista vacía
+            if (userOpt.isEmpty() || userOpt.get().getMusician() == null) {
+                return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
+            }
+            Long musicianId = userOpt.get().getMusician().getId();
+            return new ResponseEntity<>(concertRepository.findByMusicianId(musicianId), HttpStatus.OK);
+        }
+
+        List<Concert> concerts = concertRepository.findByFilters(city, status, performed);
         return new ResponseEntity<>(concerts, HttpStatus.OK);
     }
 
@@ -104,7 +119,7 @@ public class ConcertService {
         concert.setPerformed(updateConcert.isPerformed());
         concert.setLatitude(updateConcert.getLatitude());
         concert.setStatus(updateConcert.getStatus());
-        concert.setMusician(updateConcert.getMusician());
+        // El dueño del concierto no se cambia al editar: conserva su músico actual.
         concert.setDate(updateConcert.getDate());
 
         // Campos nuevos para el formulario de SGAE
