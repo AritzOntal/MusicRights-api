@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Data
@@ -53,6 +54,44 @@ public class Concert {
 
     @Column
     private Double latitude;
+
+    // --- Datos del concierto/local para el formulario de SGAE ---
+    @Column
+    private LocalTime time;          // Hora prevista
+
+    @Column(name = "venue_name")
+    private String venueName;        // Nombre del local
+
+    @Column(name = "venue_address")
+    private String venueAddress;     // Domicilio del local
+
+    @Column
+    private Integer capacity;        // Aforo total
+
+    @Column(name = "venue_owner")
+    private String venueOwner;       // Titular del local
+
+    @Column
+    private String performers;       // Actuantes
+
+    @Column(name = "ticket_class")
+    private String ticketClass;      // Clase de localidad (ej: General)
+
+    @Column(name = "total_tickets")
+    private Integer totalTickets;    // Número de localidades / total
+
+    @Column(name = "tariff_type")
+    private String tariffType;       // Tarifa: PERCENTAGE (8,5%) o FLAT (tanto alzado)
+
+    // Setlist: obras ejecutadas en este concierto (campo "Títulos de las obras" del PDF)
+    @JsonIgnoreProperties({"musicians"})
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "concert_work",
+            joinColumns = @JoinColumn(name = "concert_id"),
+            inverseJoinColumns = @JoinColumn(name = "work_id")
+    )
+    private List<Work> works;
 
     @JsonIgnoreProperties("works")
     @ManyToOne

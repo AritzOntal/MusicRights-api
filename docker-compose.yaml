@@ -5,10 +5,10 @@ services:
     container_name: musicrights-db
     restart: always
     environment:
-      MYSQL_USER: $MARIADB_USER
-      MYSQL_PASSWORD: $MUSICRIGHTS_DATABASE_PASSWORD
-      MYSQL_DATABASE: $MARIADB_DATABASE
-      MYSQL_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
+      MARIADB_USER: $MARIADB_USER
+      MARIADB_PASSWORD: $MUSICRIGHTS_DATABASE_PASSWORD
+      MARIADB_DATABASE: $MARIADB_DATABASE
+      MARIADB_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
     volumes:
       - musicrights-db-data:/var/lib/mysql
     healthcheck:

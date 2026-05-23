@@ -50,6 +50,23 @@ public class Musician {
 
     @Column(name = "affiliated_number")
     private long affiliatedNumber;
+
+    // --- Datos del organizador para el formulario de SGAE ---
+    @Column
+    private String address;          // Domicilio
+
+    @Column(name = "postal_code")
+    private String postalCode;       // Código Postal
+
+    @Column
+    private String phone;            // Teléfono
+
+    @Column
+    private String email;            // e-mail
+
+    @Column(name = "contact_person")
+    private String contactPerson;    // Persona a contactar
+
     // RELACIONAR CON UNA LISTA DE WORKS POR MUSICO (List<Work)
     //NO VUELVO A CREAR LA TABLA, UTIULIZO MAPPEDBY
     @JsonIgnoreProperties("musicians")
@@ -60,6 +77,7 @@ public class Musician {
     @OneToMany(mappedBy = "musician")
     private List<Claim> claims;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "musician", optional = true)
     private User user;
 }

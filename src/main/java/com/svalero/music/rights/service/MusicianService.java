@@ -146,6 +146,12 @@ public class MusicianService {
         musician.setAffiliated(updatedMusician.getAffiliated());
         musician.setDni(updatedMusician.getDni());
         musician.setAffiliatedNumber(updatedMusician.getAffiliatedNumber());
+        // Datos del organizador para el formulario de SGAE
+        musician.setAddress(updatedMusician.getAddress());
+        musician.setPostalCode(updatedMusician.getPostalCode());
+        musician.setPhone(updatedMusician.getPhone());
+        musician.setEmail(updatedMusician.getEmail());
+        musician.setContactPerson(updatedMusician.getContactPerson());
 
         musicianRepository.save(musician);
         return musician;
