@@ -42,6 +42,13 @@ public class WorkController {
         return ResponseEntity.ok().body(work);
     }
 
+    //FILTRADO: todas las obras de un músico
+    @GetMapping("/v1/works/by-musician/{id}")
+    public ResponseEntity<List<Work>> getByMusician(@PathVariable Long id) throws MusicianNotFoundException {
+        List<Work> works = workService.findByMusician(id);
+        return ResponseEntity.ok().body(works);
+    }
+
     @PostMapping("/v1/works")
     public ResponseEntity<Work> create(@RequestBody @Valid Work work) {
         workService.add(work);

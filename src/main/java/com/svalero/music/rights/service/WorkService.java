@@ -125,6 +125,31 @@ public class WorkService {
     public void delete(long id) {
         Work work = workRepository.findById(id)
                 .orElseThrow(WorkNotFoundException::new);
+
+        // Un músico solo puede borrar obras de su propio catálogo.
+        // El admin puede borrar cualquier obra.
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAdmin = auth != null && auth.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        if (!isAdmin) {
+            if (auth == null) {
+                throw new WorkNotFoundException();
+            }
+            Long musicianId = userRepository.findByUsername(auth.getName())
+                    .map(User::getMusician)
+                    .map(Musician::getId)
+                    .orElse(null);
+            boolean owns = musicianId != null
+                    && work.getMusicians() != null
+                    && work.getMusicians().stream()
+                            .anyMatch(m -> m.getId().equals(musicianId));
+            if (!owns) {
+                // No pertenece a su catálogo: la tratamos como inexistente (404)
+                throw new WorkNotFoundException();
+            }
+        }
+
         workRepository.delete(work);
     }
 }
