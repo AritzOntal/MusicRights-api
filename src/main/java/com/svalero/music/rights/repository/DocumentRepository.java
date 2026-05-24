@@ -27,4 +27,12 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
             "(:createAt IS NULL OR d.createAt = :createAt)")
 
     List <Document> findByFilters(String type, Boolean complete, LocalDate createAt);
+
+    // Documentos de un músico (a través de su concierto), más recientes primero
+    @Query("SELECT d FROM Document d JOIN d.concert c JOIN c.musician m WHERE m.id = :id ORDER BY d.id DESC")
+    List<Document> findByMusicianId(@Param("id") Long id);
+
+    // Documentos asociados a un concierto (para borrarlos al eliminar el concierto)
+    @Query("SELECT d FROM Document d WHERE d.concert.id = :concertId")
+    List<Document> findByConcertId(@Param("concertId") Long concertId);
 }

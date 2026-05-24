@@ -45,11 +45,20 @@ public class Document {
     @Column
     private float completionPercentage;
 
-    //TODO CREAR COLUMNA PARA GUARDAR ARRAY DE BYETS DEL PDF
+    // Clave (key) del objeto en S3 donde está almacenado el PDF generado.
+    @JsonIgnore
+    @Column(name = "s3_key")
+    private String s3Key;
 
     @JsonIgnoreProperties({"musician", "works"})
     @OneToOne
     @JoinColumn(name = "claim_id", unique = true)
     private Claim claim;
+
+    // Concierto al que pertenece este documento (para el PDF de SGAE).
+    @JsonIgnoreProperties({"musician", "works"})
+    @ManyToOne
+    @JoinColumn(name = "concert_id")
+    private Concert concert;
 
 }

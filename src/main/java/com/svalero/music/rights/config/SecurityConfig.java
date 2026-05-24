@@ -65,6 +65,15 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/claims/**").hasAnyRole("MUSICIAN", "ADMIN")
                         .requestMatchers("/api/v1/concerts/**").hasAnyRole("MUSICIAN", "ADMIN")
 
+                        // Lista de documentos del músico logueado
+                        .requestMatchers(HttpMethod.GET, "/api/v1/documents/mine").hasAnyRole("MUSICIAN", "ADMIN")
+
+                        // Borrado de un documento propio
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/documents/mine/*").hasAnyRole("MUSICIAN", "ADMIN")
+
+                        // Descarga de documentos generados (URL prefirmada): músico o admin
+                        .requestMatchers(HttpMethod.GET, "/api/v1/documents/*/download").hasAnyRole("MUSICIAN", "ADMIN")
+
                         // RESTO
                         .anyRequest().hasRole("ADMIN")
                     )

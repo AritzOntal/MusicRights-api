@@ -31,6 +31,10 @@ services:
     environment:
       MUSICRIGHTS_DATABASE_PASSWORD: $MUSICRIGHTS_DATABASE_PASSWORD
       SPRING_PROFILES_ACTIVE: $PROFILE
+    volumes:
+      # Monta las credenciales de AWS del host dentro del contenedor (solo lectura).
+      # El contenedor corre como root, así que su home es /root.
+      - ${HOME}/.aws:/root/.aws:ro
     networks:
       - network-musicrights
 

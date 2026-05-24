@@ -1,6 +1,7 @@
 package com.svalero.music.rights.service;
 
 import com.svalero.music.rights.domain.Concert;
+import com.svalero.music.rights.domain.Document;
 import com.svalero.music.rights.domain.Musician;
 import com.svalero.music.rights.domain.User;
 import com.svalero.music.rights.domain.Work;
@@ -8,6 +9,7 @@ import com.svalero.music.rights.exception.ConcertNotFoundException;
 import com.svalero.music.rights.exception.MusicianNotFoundException;
 import com.svalero.music.rights.exception.WorkNotFoundException;
 import com.svalero.music.rights.repository.ConcertRepository;
+import com.svalero.music.rights.repository.DocumentRepository;
 import com.svalero.music.rights.repository.MusicianRepository;
 import com.svalero.music.rights.repository.UserRepository;
 import com.svalero.music.rights.repository.WorkRepository;
@@ -28,12 +30,16 @@ public class ConcertService {
     private MusicianRepository musicianRepository;
     private WorkRepository workRepository;
     private UserRepository userRepository;
+    private DocumentRepository documentRepository;
+    private S3StorageService s3StorageService;
 
-    public ConcertService(ConcertRepository concertRepository, MusicianRepository musicianRepository, WorkRepository workRepository, UserRepository userRepository) {
+    public ConcertService(ConcertRepository concertRepository, MusicianRepository musicianRepository, WorkRepository workRepository, UserRepository userRepository, DocumentRepository documentRepository, S3StorageService s3StorageService) {
         this.concertRepository = concertRepository;
         this.musicianRepository = musicianRepository;
         this.workRepository = workRepository;
         this.userRepository = userRepository;
+        this.documentRepository = documentRepository;
+        this.s3StorageService = s3StorageService;
     }
 
     // Resuelve el setlist: por cada obra recibida (normalmente solo con id),
@@ -139,8 +145,33 @@ public class ConcertService {
     }
 
     public void delete(long id) {
-        concertRepository.findById(id)
+        Concert concert = concertRepository.findById(id)
                 .orElseThrow(ConcertNotFoundException::new);
-        concertRepository.deleteById(id);
+
+        // Comprobar propiedad: un músico solo borra sus conciertos; el admin, cualquiera.
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAdmin = auth != null && auth.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+        if (!isAdmin) {
+            Long musicianId = (auth != null)
+                    ? userRepository.findByUsername(auth.getName())
+                        .map(User::getMusician).map(Musician::getId).orElse(null)
+                    : null;
+            Long ownerId = concert.getMusician() != null ? concert.getMusician().getId() : null;
+            if (musicianId == null || !musicianId.equals(ownerId)) {
+                // No es suyo: lo tratamos como inexistente (404).
+                throw new ConcertNotFoundException();
+            }
+        }
+
+        // Borrar los documentos asociados (registro + PDF en S3) para no violar la FK concert_id.
+        for (Document document : documentRepository.findByConcertId(id)) {
+            if (document.getS3Key() != null) {
+                s3StorageService.delete(document.getS3Key());
+            }
+            documentRepository.delete(document);
+        }
+
+        concertRepository.delete(concert);
     }
 }
