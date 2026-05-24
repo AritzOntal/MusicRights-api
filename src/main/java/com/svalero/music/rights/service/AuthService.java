@@ -4,7 +4,10 @@ import com.svalero.music.rights.domain.User;
 import com.svalero.music.rights.repository.MusicianRepository;
 import com.svalero.music.rights.repository.UserRepository;
 import com.svalero.music.rights.security.JwtUtils;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,14 +37,14 @@ public class AuthService {
         userRepository.save(user);
 
         return user;
-    }
+}
 
     public String login(String username, String password) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("Credenciales inválidas");
+            throw new AuthenticationCredentialsNotFoundException("Credenciales inválidas");
         }
 
         // Si todo es correcto, generamos y devolvemos el String del token

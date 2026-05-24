@@ -29,12 +29,15 @@ services:
       musicrights-db:
         condition: service_healthy
     environment:
+      # Tus variables originales de la base de datos se quedan igual:
       MUSICRIGHTS_DATABASE_PASSWORD: $MUSICRIGHTS_DATABASE_PASSWORD
       SPRING_PROFILES_ACTIVE: $PROFILE
-    volumes:
-      # Monta las credenciales de AWS del host dentro del contenedor (solo lectura).
-      # El contenedor corre como root, así que su home es /root.
-      - ${HOME}/.aws:/root/.aws:ro
+
+      # Añadimos estas tres para que el SDK de AWS lea el token de Vocareum:
+      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+      AWS_SESSION_TOKEN: $AWS_SESSION_TOKEN
+    # El volumen de ${HOME}/.aws lo hemos borrado porque ya no hace falta
     networks:
       - network-musicrights
 
