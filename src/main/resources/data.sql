@@ -33,40 +33,65 @@ VALUES
 (12, 'Ziryab (Piano Cover)', 'ESJAZ9200444', 'Flamenco Jazz', 7.15, '1992-06-12', true),
 (13, 'No hay tanto pan', 'ESFOL1600555', 'Folk / Canción de Autor', 4.05, '2016-01-20', true),
 (14, 'Entre dos tierras', 'ESHER9000666', 'Rock Alternativo', 6.05, '1990-04-02', true),
-(15, 'Lady Blue', 'ESBUN0200777', 'Glam Rock', 5.30, '2002-03-25', true);
+(15, 'Lady Blue', 'ESBUN0200777', 'Glam Rock', 5.30, '2002-03-25', true),
+(16, 'Ecos de Medianoche', 'ESARZ2600016', 'Rock Alternativo', 4.15, '2023-04-10', true),
+(17, 'Fuego en el Asfalto', 'ESARZ2600017', 'Hard Rock', 3.58, '2022-08-19', true),
+(18, 'Caminos Cruzados', 'ESARZ2600018', 'Rock / Blues', 5.12, '2023-01-15', true),
+(19, 'El Vals de la Locura', 'ESARZ2600019', 'Rock Progresivo', 6.40, '2024-05-20', true),
+(20, 'Luz de Gas', 'ESARZ2600020', 'Rock Pop', 3.22, '2022-11-02', true),
+(21, 'Sombras en la Niebla', 'ESARZ2600021', 'Gothic Rock', 4.45, '2023-09-05', true),
+(22, 'Gritos al Viento', 'ESARZ2600022', 'Hard Rock', 3.34, '2024-02-14', true),
+(23, 'La Última Estación', 'ESARZ2600023', 'Rock Alternativo', 5.02, '2021-06-30', true),
+(24, 'Bajo la Lluvia', 'ESARZ2600024', 'Rock / Blues', 4.28, '2023-12-25', true),
+(25, 'Despierta el Motor', 'ESARZ2600025', 'Heavy Rock', 3.49, '2024-07-01', true),
+(26, 'Horizonte de Arena', 'ESARZ2600026', 'Stoner Rock', 5.30, '2022-03-11', true),
+(27, 'Viento de Cara', 'ESARZ2600027', 'Rock Urbano', 4.05, '2023-07-22', true),
+(28, 'Espejos Rotos', 'ESARZ2600028', 'Rock Alternativo', 3.52, '2024-10-05', true),
+(29, 'El Último Trago', 'ESARZ2600029', 'Rock / Blues', 4.55, '2021-09-18', true),
+(30, 'Cielo Eléctrico', 'ESARZ2600030', 'Hard Rock', 4.18, '2024-12-01', true);
 
 -- =============================================================================
 -- 3. RELACIÓN COMPUESTA (Tabla intermedia: musician_work)
 -- =============================================================================
 INSERT IGNORE INTO musician_work (work_id, musician_id) VALUES 
 (1, 1), (2, 2), (3, 3), (4, 4), (4, 1), (6, 5), (7, 5), 
-(8, 6), (9, 6), (10, 7), (11, 7), (12, 8), (13, 9), (14, 10), (15, 10);
+(8, 6), (9, 6), (10, 7), (11, 7), (12, 8), (13, 9), (14, 10), (15, 10),
+(16, 2), (17, 2), (18, 2), (19, 2), (20, 2), (21, 2), (22, 2),
+(23, 2), (24, 2), (25, 2), (26, 2), (27, 2), (28, 2), (29, 2), (30, 2);
 
 -- =============================================================================
--- 4. REGISTRO DE CONCIERTOS (Tabla: concerts)
+-- 4. REGISTRO DE CONCIERTOS (Asociados a Aritz - musician_id = 2)
 -- =============================================================================
+
 INSERT IGNORE INTO concerts (
-    id, show_title, city, province, date, status, performed, ticket_price, 
-    longitude, latitude, time, venue_name, venue_address, capacity, 
+    id, show_title, city, province, date, status, performed, ticket_price,
+    longitude, latitude, time, venue_name, venue_address, capacity,
     venue_owner, performers, ticket_class, total_tickets, tariff_type, musician_id
 )
-VALUES 
-(1, 'Gira Santana 2025', 'Zaragoza', 'Zaragoza', '2025-06-15', 'PROGRAMMED', true, 45.50, -0.8891, 41.6488, '21:30:00', 'Pabellón Príncipe Felipe', 'Av. de Cesáreo Alierta 120', 10000, 'Ayto Zaragoza', 'Carlos Santana Band', 'General', 8500, 'PERCENTAGE', 1),
-(2, 'Rosalía Motomami En Vivo', 'Sevilla', 'Sevilla', '2026-09-20', 'PROGRAMMED', false, 80.00, -5.9845, 37.3891, '22:30:00', 'Estadio de La Cartuja', 'Isla de la Cartuja s/n', 60000, 'Junta de Andalucía', 'Rosalía', 'Golden Ring', 55000, 'PERCENTAGE', 4),
-(3, 'Fito & Fitipaldis Teatros', 'Bilbao', 'Vizcaya', '2024-11-12', 'COMPLETED', true, 50.00, -2.9350, 43.2630, '20:30:00', 'Teatro Arriaga', 'Plaza Arriaga 1', 1200, 'Ayto Bilbao', 'Fito y los Fitipaldis', 'Platea', 1150, 'FLAT', 5),
-(4, 'El Madrileño Open Air', 'Valencia', 'Valencia', '2025-07-04', 'COMPLETED', true, 65.00, -0.3763, 39.4699, '22:00:00', 'Marina de Valencia', 'Carrer del Moll de la Duana', 25000, 'Consorcio Marina', 'C. Tangana', 'General', 24200, 'PERCENTAGE', 7),
-(5, 'Fito Gira 20 Aniversario', 'Santander', 'Cantabria', '2021-09-10', 'COMPLETED', true, 35.00, -3.8094, 43.4623, '21:00:00', 'Campa de la Magdalena', 'Av. de la Magdalena', 12000, 'Ayto Santander', 'Fito & Fitipaldis', 'General', 11000, 'PERCENTAGE', 5),
-(6, 'KaseO Jazz Magnetism Tour', 'Granada', 'Granada', '2021-08-05', 'COMPLETED', true, 28.00, -3.5986, 37.1773, '22:00:00', 'Plaza de Toros', 'Av. de Doctor Olóriz 25', 9000, 'Chopera Toros', 'KaseO + Banda', 'Ruedo', 8200, 'FLAT', 6),
-(7, 'Chano Domínguez Trío Jazz', 'Cádiz', 'Cádiz', '2021-12-23', 'COMPLETED', true, 22.00, -6.2925, 36.5271, '19:30:00', 'Gran Teatro Falla', 'Plaza de Fragela s/n', 1000, 'Ayto Cádiz', 'Chano Domínguez', 'Anfiteatro', 950, 'FLAT', 8),
-(8, 'Amaral Fin de Gira Nocturnal', 'Madrid', 'Madrid', '2021-05-29', 'PENDING', true, 30.00, -3.7038, 40.4167, '22:00:00', 'WiZink Center', 'Av. Felipe II s/n', 15000, 'Comunidad de Madrid', 'Amaral', 'Pista', 14000, 'PERCENTAGE', 2),
-(9, 'Bunbury Mutaciones Especial', 'Huesca', 'Huesca', '2021-05-27', 'PENDING', true, 40.00, -0.4084, 42.1362, '21:30:00', 'Plaza de Toros Huesca', 'Calle de la Palma', 5000, 'Ayto Huesca', 'Bunbury', 'General', 4800, 'PERCENTAGE', 10),
-(10, 'Judas Priest Nostalgia Tour', 'Barcelona', 'Barcelona', '2020-03-10', 'ARCHIVED', true, 60.00, 2.1734, 41.3851, '20:00:00', 'Palau Sant Jordi', 'Passeig Olímpic 5', 18000, 'Barcelona Serveis', 'Judas Priest + Guest', 'General', 17500, 'FLAT', 3),
-(11, 'KaseO El Círculo Arena', 'Zaragoza', 'Zaragoza', '2018-10-12', 'ARCHIVED', true, 25.00, -0.8891, 41.6488, '22:00:00', 'Pabellón Príncipe Felipe', 'Av. Cesáreo Alierta', 12000, 'Ayto Zaragoza', 'Kase.O', 'General', 12000, 'PERCENTAGE', 6),
-(12, 'Sílvia Pérez Cruz Íntimo', 'Girona', 'Girona', '2020-07-18', 'ARCHIVED', true, 35.00, 2.8214, 41.9794, '20:00:00', 'Auditori de Girona', 'Passeig de la Devesa 35', 1500, 'Auditori G.', 'Sílvia Pérez Cruz', 'Platea', 1420, 'FLAT', 9);
+VALUES
+-- Conciertos Pasados (COMPLETED / ARCHIVED)
+(13, 'Gira El Despertar 2022', 'Zaragoza', 'Zaragoza', '2022-03-15', 'ARCHIVED', true, 20.00, -0.8891, 41.6488, '20:00:00', 'Sala López', 'Calle Sixto Celorrio 2', 400, 'Privado', 'Aritz Solo', 'General', 380, 'FLAT', 2),
+(14, 'Noche de Rock Urbano', 'Madrid', 'Madrid', '2022-05-20', 'COMPLETED', true, 25.00, -3.7038, 40.4167, '21:00:00', 'Sala Riviera', 'Paseo bajo de la Virgen s/n', 2500, 'Privado', 'Aritz & Banda', 'General', 2400, 'PERCENTAGE', 2),
+(15, 'Festival de Verano Independiente', 'Zaragoza', 'Zaragoza', '2022-07-08', 'COMPLETED', true, 40.00, -0.8833, 41.6563, '22:30:00', 'Espacio Zity', 'Recinto Ferial Valdespartera', 15000, 'Ayto Zaragoza', 'Aritz Live', 'General', 14200, 'PERCENTAGE', 2),
+(16, 'Concierto Íntimo y Acústico', 'Barcelona', 'Barcelona', '2022-11-12', 'COMPLETED', true, 30.00, 2.1734, 41.3851, '19:30:00', 'Barts Sala', 'Avinguda del Paral·lel 62', 1500, 'Privado', 'Aritz Trío', 'Platea', 1350, 'FLAT', 2),
+(17, 'Gira El Despertar 2023', 'Valencia', 'Valencia', '2023-02-18', 'COMPLETED', true, 22.50, -0.3763, 39.4699, '21:00:00', 'Sala Moon', 'Calle San Vicente Martir 200', 1000, 'Privado', 'Aritz & Banda', 'General', 950, 'FLAT', 2),
+(18, 'Fiestas de San Isidro Especial', 'Madrid', 'Madrid', '2023-05-15', 'COMPLETED', true, 0.00, -3.7145, 40.4192, '21:30:00', 'Plaza Mayor', 'Plaza Mayor de Madrid', 10000, 'Ayto Madrid', 'Aritz Folk Band', 'Gratuito', 10000, 'FLAT', 2),
+(19, 'Directo en el Norte', 'Bilbao', 'Vizcaya', '2023-08-22', 'COMPLETED', true, 18.00, -2.9350, 43.2630, '22:00:00', 'Kafe Antzokia', 'Done Bikendi Kalea 2', 800, 'Privado', 'Aritz Band', 'General', 780, 'PERCENTAGE', 2),
+(20, 'Fin de Gira El Despertar', 'Zaragoza', 'Zaragoza', '2023-10-21', 'COMPLETED', true, 28.00, -0.8891, 41.6488, '21:00:00', 'Teatro de las Esquinas', 'Via Universitas 30', 1000, 'Privado', 'Aritz & Amigos', 'Platea', 1000, 'PERCENTAGE', 2),
+(21, 'Presentación Oficial El Eco 2024', 'Sevilla', 'Sevilla', '2024-03-02', 'COMPLETED', true, 25.00, -5.9845, 37.3891, '20:30:00', 'Sala Custom', 'Calle Metalurgia 25', 800, 'Privado', 'Aritz Solo', 'General', 710, 'FLAT', 2),
+(22, 'Gira El Eco - Ciclo de Teatros', 'Murcia', 'Murcia', '2024-05-17', 'COMPLETED', true, 35.00, -1.1307, 37.9838, '20:00:00', 'Teatro Romea', 'Plaza Julián Romea s/n', 1100, 'Ayto Murcia', 'Aritz Quintet', 'Butaca', 1050, 'FLAT', 2),
+(23, 'Directo de Verano Costa del Sol', 'Málaga', 'Málaga', '2024-07-19', 'COMPLETED', true, 45.00, -4.4214, 36.7213, '23:00:00', 'Auditorio Municipal', 'Cortijo de Torres s/n', 8000, 'Ayto Málaga', 'Aritz & Banda', 'General', 7600, 'PERCENTAGE', 2),
+(24, 'Concierto de las Fiestas del Pilar', 'Zaragoza', 'Zaragoza', '2024-10-11', 'COMPLETED', true, 30.00, -0.8891, 41.6488, '22:00:00', 'Pabellón Príncipe Felipe', 'Av. Cesáreo Alierta 120', 12000, 'Ayto Zaragoza', 'Aritz & Heavy Band', 'General', 11800, 'PERCENTAGE', 2),
 
--- =============================================================================
--- 5. SEGURIDAD Y ACCESOS (Manejo de palabras reservadas del motor)
--- =============================================================================
+-- Conciertos Presentes / Futuros (PROGRAMMED / PENDING)
+(25, 'Gira El Eco Eléctrico 2025', 'Salamanca', 'Salamanca', '2025-02-14', 'PROGRAMMED', true, 25.00, -5.6635, 40.9688, '21:00:00', 'Palacio de Congresos', 'Plaza de San Román', 1200, 'Junta CyL', 'Aritz Rock', 'General', 950, 'FLAT', 2),
+(26, 'Especial Día de San Jorge', 'Huesca', 'Huesca', '2025-04-23', 'PROGRAMMED', true, 15.00, -0.4084, 42.1362, '19:00:00', 'Centro Cultural Manuel Benito', 'Plaza Alcalde José Luis Rubió', 500, 'Ayto Huesca', 'Aritz Acústico', 'General', 450, 'FLAT', 2),
+(27, 'Open Air Festival Nocturno', 'Alicante', 'Alicante', '2025-06-28', 'PROGRAMMED', false, 35.00, -0.4815, 38.3452, '22:00:00', 'Plaza de Toros Alicante', 'Plaza de España 7', 8000, 'Privado', 'Aritz Tour Eléctrico', 'Ruedo', 4200, 'PERCENTAGE', 2),
+(28, 'Gira El Eco - Cierre de Verano', 'Santander', 'Cantabria', '2025-09-05', 'PROGRAMMED', false, 28.00, -3.8094, 43.4623, '21:30:00', 'Escenario Santander', 'Parque de las Llamas', 1000, 'Ayto Santander', 'Aritz & Banda', 'General', 600, 'PERCENTAGE', 2),
+(29, 'Acústico de Otoño', 'Teruel', 'Teruel', '2025-11-08', 'PENDING', false, 20.00, -1.1065, 40.3456, '20:00:00', 'Teatro Marín', 'Plaza de San Juan 3', 600, 'Ayto Teruel', 'Aritz Solo', 'Platea', 0, 'FLAT', 2),
+(30, 'Concierto Especial de Año Nuevo', 'Logroño', 'La Rioja', '2026-01-03', 'PENDING', false, 32.00, -2.4456, 42.4667, '19:30:00', 'Riojaforum', 'Calle San Millán 25', 1200, 'Gobierno Rioja', 'Aritz Symphonic', 'Anfiteatro', 0, 'FLAT', 2),
+(31, 'Grandes Éxitos en Vivo 2026', 'Burgos', 'Burgos', '2026-05-22', 'PENDING', false, 26.00, -3.6969, 42.3440, '21:00:00', 'Sala Andén 56', 'Calle San Pedro y San Felices', 1000, 'Privado', 'Aritz Electro Band', 'General', 0, 'PERCENTAGE', 2),
+(32, 'Gira Universo Infinito 2027', 'Pamplona', 'Navarra', '2027-02-12', 'PENDING', false, 40.00, -1.6432, 42.8125, '22:00:00', 'Navarra Arena', 'Plaza de Aizagerria 1', 10000, 'Gob de Navarra', 'Aritz Big Band', 'General', 0, 'PERCENTAGE', 2);
 
 -- =============================================================================
 -- 5. SEGURIDAD Y ACCESOS (Con el prefijo $2a$ compatible con tu Spring Security)
@@ -81,4 +106,4 @@ INSERT IGNORE INTO `users` (id, username, password, role, musician_id)
 VALUES (1, 'admin_musician', '$2b$10$SVfm6kRrcAhNOMVirm71rOgLzFGkiiEGX.Cej4gmJRJnKV/3d2cne', 'ROLE_ADMIN', 1);
 
 INSERT IGNORE INTO `users` (id, username, password, role, musician_id)
-VALUES (2, 'eva_amaral', '$2b$10$aLeuhpYrvuDkSndppDS.kOSuCTvE49s6TULNiwAlspgtHxRzNyhP6', 'ROLE_MUSICIAN', 2);
+VALUES (2, 'Aritz', '$2b$10$.zia4ocy6de84q0/nqL.VeLl2jLDNEzMUMLgQOtW3D1FOu/2RZAB6', 'ROLE_MUSICIAN', 2);
