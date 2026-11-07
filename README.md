@@ -12,19 +12,9 @@ Cada concierto en el que un músico interpreta obras propias genera derechos que
 
 ```mermaid
 flowchart LR
-    U[Navegador] --> F[Frontend React<br/>Vercel]
-    F -- REST + JWT --> G[Amazon API Gateway]
-    subgraph AWS [AWS · us-east-1]
-        G
-        subgraph EC2 [EC2 · Docker Compose]
-            A[API Spring Boot<br/>Java 21]
-            D[(MariaDB)]
-        end
-        S3[(Amazon S3<br/>PDF SGAE)]
-    end
-    G -- proxy --> A
-    A -- JPA --> D
-    A -- AWS SDK v2 --> S3
+    F[React · Vercel] --> G[API Gateway] --> A[Spring Boot · EC2 · Docker]
+    A --> D[(MariaDB)]
+    A --> S[(Amazon S3)]
 ```
 
 - **API Gateway** es el único punto de entrada público y hace de proxy hacia la API.
@@ -53,7 +43,7 @@ flowchart LR
 | Documentos | Apache PDFBox 3 |
 | Cloud | AWS EC2, API Gateway, S3 (AWS SDK v2) |
 | Contenedores | Docker, Docker Compose, Docker Hub |
-| Calidad | JUnit 5, Mockito, colección Postman ejecutada con Newman en GitHub Actions |
+| Pruebas de API | Colección de Postman ejecutada con Newman en GitHub Actions |
 | Documentación y mocks | OpenAPI 3.0 (`MusicRights.yaml`), WireMock |
 
 ---
@@ -114,10 +104,7 @@ cp .env.sample .env
 # 2. Levantar la base de datos
 docker compose -f docker-compose.dev.yaml up -d
 
-# 3. Ejecutar los tests
-mvn test
-
-# 4. Arrancar la API
+# 3. Arrancar la API
 mvn spring-boot:run
 ```
 
