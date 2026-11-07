@@ -4,7 +4,7 @@ API REST de **MusicRights**, una aplicación que ayuda a los músicos independie
 
 Cada concierto en el que un músico interpreta obras propias genera derechos que puede reclamar, pero el trámite exige rellenar a mano un formulario oficial de 76 campos por actuación, y el derecho caduca a los cinco años. Esta API centraliza obras, conciertos y músicos, **genera automáticamente el PDF oficial de la SGAE ya cumplimentado** y lo guarda en Amazon S3.
 
-> Frontend: [MusicRights-web](https://github.com/AritzOntal/MusicRights-web) · App Android: [MusicRightsApp](https://github.com/AritzOntal/MusicRightsApp)
+> Frontend: [MusicRights-web](https://github.com/AritzOntal/MusicRights-web)
 
 ---
 
@@ -127,14 +127,26 @@ En cada *push* a `develop`, **GitHub Actions** ejecuta la colección de Postman 
 
 ---
 
+## Tests
+
+La batería de tests se desarrolló en la iteración anterior de la API, [MusicRights](https://github.com/AritzOntal/MusicRights/tree/develop/src/test/java/com/svalero/music/rights):
+
+- **Capa web** (`@WebMvcTest` + MockMvc): tests de los controladores de conciertos, obras, músicos, reclamaciones y documentos, incluidas las respuestas de error del `GlobalExceptionHandler`.
+- **Capa de servicio** (JUnit 5 + Mockito): tests unitarios de los cinco servicios con los repositorios simulados.
+- **Utilidades**: cálculo de fechas.
+
+En esta versión, la API se valida además con una colección de Postman que GitHub Actions ejecuta con Newman en cada *push*.
+
+---
+
 ## Mejoras previstas
 
+- Migrar la batería de tests de JUnit y Mockito a esta versión y ejecutarla en GitHub Actions.
 - Avisos de caducidad desde el backend (correo o tareas programadas).
 - Alta disponibilidad con varias instancias detrás de un balanceador.
 - Despliegue en una región europea para producción real.
 
 ---
 
-Proyecto final del CFGS de Desarrollo de Aplicaciones Multiplataforma (Centro San Valero, 2026).
 
 **Autor:** Aritz Ontalvilla
