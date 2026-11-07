@@ -4,7 +4,7 @@ API REST de **MusicRights**, una aplicación que ayuda a los músicos independie
 
 Cada concierto en el que un músico interpreta obras propias genera derechos que puede reclamar, pero el trámite exige rellenar a mano un formulario oficial de 76 campos por actuación, y el derecho caduca a los cinco años. Esta API centraliza obras, conciertos y músicos, **genera automáticamente el PDF oficial de la SGAE ya cumplimentado** y lo guarda en Amazon S3.
 
-> Frontend: [MusicRights-web](https://github.com/AritzOntal/MusicRights-web)
+> Frontend: [MusicRights-web](https://github.com/AritzOntal/MusicRights-web) · App Android: [MusicRightsApp](https://github.com/AritzOntal/MusicRightsApp)
 
 ---
 
